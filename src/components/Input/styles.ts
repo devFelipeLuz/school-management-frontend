@@ -17,7 +17,7 @@ export const LargeInput = styled(DefaultInput)`
     display: flex;
 
     height: 48px;
-    width: 60%;
+    width: auto;
 
     margin-bottom: 0;
     text-align: center;

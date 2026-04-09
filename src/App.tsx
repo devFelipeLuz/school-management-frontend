@@ -1,16 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from './pages/Login/LoginPage'
 import { GlobalStyle } from './styles/global'
 import DashboardPage from './pages/Dashboard/DashboardPage'
 import Students from './pages/Students/Students'
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem("accessToken");
 
   return (
     <BrowserRouter>
-    <GlobalStyle />
+      <GlobalStyle />
       <Routes>
-        <Route path='/' element={<LoginPage />} />
+        <Route path="/" element={
+          isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+        } />
+        <Route path='/login' element={<LoginPage />} />
         <Route path='/dashboard' element={<DashboardPage />} />
         <Route path='/students' element={<Students />} />
       </Routes>

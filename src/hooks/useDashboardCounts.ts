@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type DashboardCounts = {
   students: number;
@@ -21,6 +22,7 @@ export function useDashboardCounts() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -41,8 +43,11 @@ export function useDashboardCounts() {
         const data = await response.json();
 
         setCounts(data);
+        
       } catch (error) {
         setError("Erro ao carregar dados");
+        navigate("/");
+      
       } finally {
         setLoading(false);
       }

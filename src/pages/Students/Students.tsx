@@ -10,12 +10,22 @@ import StudentEditCard from "../../components/Card/StudentEditCard/StudentEditCa
 import { useStudents } from "../../hooks/useStudents";
 import { useState } from "react";
 
-
 function Students() {
     const {
         students,
+
         selectedStudent,
         setSelectedStudent,
+
+        activeFilter,
+        setActiveFilter,
+
+        nameFilter,
+        setNamefilter,
+
+        emailFilter,
+        setEmailFilter,
+
         fetchStudents,
         handleActivate,
         handleDeactivate
@@ -76,70 +86,95 @@ function Students() {
                 <S.StudentContainer>
                     <Sidebar />
                     <S.MainContent>
-                        <S.InputGroup>
-                            <LargeInput type="text" placeholder="Nome / Email" />
-                            <NewStudentButton
-                                type="button"
-                                onClick={() => setStudentCreationModal(true)}>
-                                + New Student
-                            </NewStudentButton>
-                        </S.InputGroup>
-                        <S.StudentList>
-                            {students.map((item) => (
-                                <li key={item.id}>
-                                    <div>
-                                        <S.Title>ID</S.Title>
-                                        <span>{item.id}</span>
-                                    </div>
-                                    <div>
-                                        <S.Title>Nome</S.Title>
+                        <S.Container>
+                            <S.Group>
+                                <S.InputGroup>
+                                    <LargeInput
+                                        type="text"
+                                        placeholder="Filter by name"
+                                        value={nameFilter}
+                                        onChange={(e) => setNamefilter(e.target.value)}
+                                    />
+                                    <LargeInput
+                                        type="text"
+                                        placeholder="Filter by email"
+                                        value={emailFilter}
+                                        onChange={(e) => setEmailFilter(e.target.value)}
+                                    />
+                                    <S.StatusSelect
+                                        value={activeFilter}
+                                        onChange={(e) => setActiveFilter(e.target.value)}
+                                    >
+                                        <option value="">All</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
+                                    </S.StatusSelect>
+                                </S.InputGroup>
+                                <NewStudentButton
+                                    type="button"
+                                    onClick={() => setStudentCreationModal(true)}>
+                                    + New Student
+                                </NewStudentButton>
+                            </S.Group>
+                            <S.TableHeader>
+                                <span>ID</span>
+                                <span>Name</span>
+                                <span>Email</span>
+                                <span>Classroom</span>
+                                <span>Status</span>
+                                <span>Actions</span>
+                            </S.TableHeader>
+                            <S.StudentList>
+                                {students.map((item) => (
+                                    <S.StudentRow key={item.id}>
+                                        <span>{item.id.slice(0, 8)}...</span>
                                         <span>{item.name}</span>
-                                    </div>
-                                    <div>
-                                        <S.Title>Email</S.Title>
                                         <span>{item.email}</span>
-                                    </div>
-                                    <div>
-                                        <S.Title>Classroom</S.Title>
                                         <span>{item.classroom || "N/A"}</span>
-                                    </div>
-                                    <div>
-                                        <S.Title>Status</S.Title>
-                                        {item.active ?
-                                            (<S.ActiveTag>active</S.ActiveTag>) :
-                                            (<S.InactiveTag>inactive</S.InactiveTag>)}
-                                    </div>
-                                    <div>
-                                        <S.EditStudentButton
-                                            onClick={() => {
-                                                setSelectedStudent(item);
-                                                setStudentEditModal(true);
-                                            }}>
-                                            edit</S.EditStudentButton>
 
                                         {item.active ? (
-                                            <S.DeactivateButton
-                                                onClick={() => {
-                                                    setSelectedStudent(item);
-                                                    setDeactivateStudentModal(true);
-                                                }}>deactivate</S.DeactivateButton>
+                                            <S.ActiveTag>active</S.ActiveTag>
                                         ) : (
-                                            <S.ActivateButton
+                                            <S.InactiveTag>inactive</S.InactiveTag>
+                                        )}
+
+                                        <S.ActionButtons>
+                                            <S.EditStudentButton
                                                 onClick={() => {
                                                     setSelectedStudent(item);
-                                                    setActivateStudentModal(true);
+                                                    setStudentEditModal(true);
                                                 }}
                                             >
-                                                activate
-                                            </S.ActivateButton>
-                                        )}
-                                    </div>
-                                </li>
-                            ))}
-                        </S.StudentList>
+                                                edit
+                                            </S.EditStudentButton>
+
+                                            {item.active ? (
+                                                <S.DeactivateButton
+                                                    onClick={() => {
+                                                        setSelectedStudent(item);
+                                                        setDeactivateStudentModal(true);
+                                                    }}
+                                                >
+                                                    deactivate
+                                                </S.DeactivateButton>
+                                            ) : (
+                                                <S.ActivateButton
+                                                    onClick={() => {
+                                                        setSelectedStudent(item);
+                                                        setActivateStudentModal(true);
+                                                    }}
+                                                >
+                                                    activate
+                                                </S.ActivateButton>
+                                            )}
+                                        </S.ActionButtons>
+                                    </S.StudentRow>
+                                ))}
+                            </S.StudentList>
+                        </S.Container>
                     </S.MainContent>
                 </S.StudentContainer>
-            </S.StudentsWrapper>
+            </S.StudentsWrapper >
         </>
     );
 }

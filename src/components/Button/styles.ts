@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const DefaultButton = styled.button`
+    display: flex;
+    text-align:center;
+    justify-content: center;
+    align-items: center;
+
     padding: 8px 12px;
     width: 100%;
 
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
   
     font-weight: bold;
     font-size: 14px;
@@ -38,10 +43,10 @@ export const SuccessButton = styled(DefaultButton)`
 
 export const NewStudentButton = styled(DefaultButton)`
     height: 48px;
-    width: 20%;
+    width: auto;
+    padding: 24px;
 
     border: none;
-    border-radius: 8px;
     outline: none;
 
     background: darkgreen;

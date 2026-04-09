@@ -4,7 +4,7 @@ import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
 import CardForm from "../CardForm/CardForm";
 
 interface Student {
-    id: number,
+    id: string,
     name: string,
     email: string
 }

@@ -14,8 +14,18 @@ export const SidebarContainer = styled.aside`
 
   display: flex;
   flex-direction: column;
+`
+
+export const ActionList = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-`;
+`
+
+export const LogoutAction = styled.div`
+  margin-top: auto;
+  padding-bottom: 64px;
+`
 
 export const SidebarItem = styled.div`
   display: flex;
@@ -31,4 +41,4 @@ export const SidebarItem = styled.div`
   &:hover {
     background: rgba(255, 255, 255, 0.08);
   }
-`;
+`

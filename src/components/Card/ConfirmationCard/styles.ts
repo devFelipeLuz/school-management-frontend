@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
     width: 480px;
     height: 240px;
-
-    backdrop-filter: blur(18px);
-    background: rgba(255, 255, 255, 0.12);
+    background-color: rgb(30, 30, 30);
 
     border: none;
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
@@ -25,6 +23,7 @@ export const CartTitle = styled.h1`
     color: #fff;
     margin-bottom: 16px;
     font-size: 24px;
+    cursor: default;
 `
 
 export const ButtonGroup = styled.div`
