@@ -11,7 +11,7 @@ interface StudentCardFormProps {
     placeholder?: string;
 }
 
-function CardForm({ submit, closeModal, title, name, email, placeholder }: StudentCardFormProps) {
+function StudentCardForm({ submit, closeModal, title, name, email, placeholder }: StudentCardFormProps) {
     return (
         <S.Section>
             <S.Form onSubmit={submit}>
@@ -54,4 +54,4 @@ function CardForm({ submit, closeModal, title, name, email, placeholder }: Stude
     )
 }
 
-export default CardForm;
+export default StudentCardForm;

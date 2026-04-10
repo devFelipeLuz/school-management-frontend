@@ -6,7 +6,8 @@ import {
   FaFileAlt,
   FaClipboardList,
   FaSignOutAlt,
-  FaCalendarAlt
+  FaCalendarAlt,
+  FaUser
 } from "react-icons/fa";
 
 import {
@@ -94,7 +95,14 @@ function Sidebar() {
             <FaCalendarAlt />
             <span>School Year</span>
           </SidebarItem>
+
+          <SidebarItem onClick={() => navigate("/school-years")}>
+            <FaUser />
+            <span>Users</span>
+          </SidebarItem>
         </ActionList>
+
+        
 
         <LogoutAction>
           <SidebarItem onClick={logout}>

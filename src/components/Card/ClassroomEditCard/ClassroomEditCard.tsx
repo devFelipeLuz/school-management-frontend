@@ -1,28 +1,29 @@
-import { type Dispatch, type FormEvent, type SetStateAction } from "react";
+import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import StudentCardForm from "../CardForm/StudentCardForm";
+import ClassroomUpdateCardForm from "../CardForm/ClassroomUpdateCardForm";
 
-interface Student {
-    id: string,
-    name: string,
-    email: string
+export interface Classroom {
+    id: string;
+    name: string;
+    enrollmentCountForSchoolYear: number;
+    maxCapacity: number;
+    active: boolean
 }
 
 interface EditCardProps {
-    student: Student;
+    classroom: Classroom;
+    handleUpdate: (e: FormEvent, id: string) => void;
     closeModal: () => void;
-    handleUpdate: (event: FormEvent, id: string) => void;
     isFinished: boolean;
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
 }
 
+function ClassroomEditCard({ classroom, handleUpdate, closeModal, isFinished, setIsFinished, error, setError }: EditCardProps) {
 
-function StudentEditCard({ student, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: EditCardProps) {
-
-    const onSave = (e: React.FormEvent) => handleUpdate(e, student.id);
+    const onSave = (e: React.FormEvent) => handleUpdate(e, classroom.id);
 
     if (isFinished) {
         return (
@@ -56,14 +57,14 @@ function StudentEditCard({ student, closeModal, handleUpdate, isFinished, setIsF
     }
 
     return (
-        <StudentCardForm
+        <ClassroomUpdateCardForm
             title="Editing..."
             submit={onSave}
             closeModal={closeModal}
-            name={student.name}
-            email={student.email}
-            placeholder="Leave it blank to keep current"
-        />)
+            name={classroom.name}
+        />
+    )
+
 }
 
-export default StudentEditCard;
+export default ClassroomEditCard;

@@ -65,7 +65,12 @@ function SchoolYear() {
                 <Modal>
                     <SchoolyearEditCard
                         schoolyears={selectedSchoolyear!}
-                        closeModal={() => setSchoolyearEditModal(false)}
+                        closeModal={() => {
+                            setSelectedSchoolyear(null);
+                            setIsFinished(false);
+                            setError(false);
+                            setSchoolyearEditModal(false);
+                        }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}

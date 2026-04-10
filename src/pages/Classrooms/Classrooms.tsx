@@ -1,35 +1,32 @@
-import Header from "../../components/Header/Header";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import * as S from "./styles";
-import Modal from "../../components/Modal/Modal";
-import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
-import StudentCreationCard from "../../components/Card/StudentCreationCard/StudentCreationCard";
-import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from "../../components/Button/styles";
-import { LargeInput } from "../../components/Input/styles";
-import StudentEditCard from "../../components/Card/StudentEditCard/StudentEditCard";
-import { useStudents } from "../../hooks/useStudents";
 import { useState } from "react";
-import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
-import MainContent from "../../components/MainContent/MainContent";
+import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from "../../components/Button/styles";
 import Container from "../../components/Container/Container";
+import Header from "../../components/Header/Header";
+import { LargeInput } from "../../components/Input/styles";
+import MainContent from "../../components/MainContent/MainContent";
+import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import SelectStatus from "../../components/SelectStatus/SelectStatus";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
+import { useClassrooms } from "../../hooks/useClassroom";
+import { ActionButtons, ClassroomContainer, ClassroomList, ClassroomRow, Group, InputGroup, TableHeader } from "./styles";
+import Modal from "../../components/Modal/Modal";
+import ClassroomCreationCard from "../../components/Card/ClassroomCreationCard/ClassroomCreationCard";
+import ClassroomEditCard from "../../components/Card/ClassroomEditCard/ClassroomEditCard";
+import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
 
-function Students() {
+function Classrooms() {
     const {
-        students,
+        classrooms,
 
-        selectedStudent,
-        setSelectedStudent,
+        selectedClassroom,
+        setSelectedClassroom,
 
         activeFilter,
         setActiveFilter,
 
         nameFilter,
-        setNamefilter,
-
-        emailFilter,
-        setEmailFilter,
+        setNameFilter,
 
         isFinished,
         setIsFinished,
@@ -39,38 +36,39 @@ function Students() {
 
         handleCreate,
         handleUpdate,
-        handleActivate,
-        handleDeactivate
-    } = useStudents();
+        handleDeactivate,
+        handleActivate
+    } = useClassrooms();
 
-    const [deactivateStudentModal, setDeactivateStudentModal] = useState(false);
-    const [activateStudentModal, setActivateStudentModal] = useState(false);
-    const [studentCreationModal, setStudentCreationModal] = useState(false);
-    const [studentEditModal, setStudentEditModal] = useState(false);
+    const [classroomCreationModal, setClassroomCreationModal] = useState(false);
+    const [classroomEditModal, setClassroomEditModal] = useState(false);
+    const [deactivateClassroomModal, setDeactivateClassroomModal] = useState(false);
+    const [activateClassroomModal, setActivateClassroomModal] = useState(false);
 
     return (
         <>
-            {studentCreationModal &&
+            {classroomCreationModal &&
                 <Modal>
-                    <StudentCreationCard
-                        closeModal={() => setStudentCreationModal(false)}
+                    <ClassroomCreationCard
+                        closeModal={() => setClassroomCreationModal(false)}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
                     />
-                </Modal>}
+                </Modal>
+            }
 
-            {studentEditModal &&
+            {classroomEditModal &&
                 <Modal>
-                    <StudentEditCard
-                        student={selectedStudent!}
+                    <ClassroomEditCard
+                        classroom={selectedClassroom!}
                         closeModal={() => {
-                            setSelectedStudent(null);
+                            setSelectedClassroom(null);
                             setIsFinished(false);
                             setError(false);
-                            setStudentEditModal(false);
+                            setClassroomEditModal(false);
                         }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
@@ -81,72 +79,73 @@ function Students() {
                 </Modal>
             }
 
-            {activateStudentModal &&
+            {activateClassroomModal &&
                 <Modal>
                     <ConfirmationCard
-                        text="Activate this student?"
+                        text="Activate this classroom?"
                         cancelTextButton="cancel"
                         successTextButton="confirm"
                         confirm={handleActivate}
-                        cancel={() => setActivateStudentModal(false)}
+                        cancel={() => setActivateClassroomModal(false)}
                     />
-                </Modal>}
+                </Modal>
+            }
 
-            {deactivateStudentModal &&
+            {deactivateClassroomModal &&
                 <Modal>
                     <ConfirmationCard
-                        text="Are you sure you want to deactivate this student?"
+                        text="Are uou sure you want to deactivate this classroom?"
                         cancelTextButton="cancel"
                         successTextButton="confirm"
                         confirm={handleDeactivate}
-                        cancel={() => setDeactivateStudentModal(false)}
+                        cancel={() => setDeactivateClassroomModal(false)}
                     />
-                </Modal>}
+                </Modal>
+            }
 
             <SectionWrapper>
                 <Header />
-                <S.StudentContainer>
+                <ClassroomContainer>
                     <Sidebar />
                     <MainContent>
                         <Container>
-                            <S.Group>
-                                <S.InputGroup>
+                            <Group>
+                                <InputGroup>
                                     <LargeInput
                                         type="text"
-                                        placeholder="Filter by name"
+                                        placeholder="Filter by class"
                                         value={nameFilter}
-                                        onChange={(e) => setNamefilter(e.target.value)}
-                                    />
-                                    <LargeInput
-                                        type="text"
-                                        placeholder="Filter by email"
-                                        value={emailFilter}
-                                        onChange={(e) => setEmailFilter(e.target.value)}
+                                        onChange={(e) => setNameFilter(e.target.value)}
                                     />
                                     <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                                </S.InputGroup>
+                                </InputGroup>
 
                                 <NewEntityButton
                                     type="button"
-                                    onClick={() => setStudentCreationModal(true)}>
-                                    + New Student
+                                    onClick={() => setClassroomCreationModal(true)}
+                                >
+                                    + New Classroom
                                 </NewEntityButton>
-                            </S.Group>
-                            <S.TableHeader>
+                            </Group>
+
+                            <TableHeader>
                                 <span>ID</span>
-                                <span>Name</span>
-                                <span>Email</span>
                                 <span>Classroom</span>
+                                <span>Current Quantity</span>
+                                <span>Max Capacity</span>
+                                <span>Year</span>
                                 <span>Status</span>
                                 <span>Actions</span>
-                            </S.TableHeader>
-                            <S.StudentList>
-                                {students.map((item) => (
-                                    <S.StudentRow key={item.id}>
+                            </TableHeader>
+
+                            <ClassroomList>
+                                {classrooms.map((item) => (
+                                    <ClassroomRow key={item.id}>
                                         <span>{item.id.slice(0, 8)}...</span>
                                         <span>{item.name}</span>
-                                        <span>{item.email}</span>
-                                        <span>{item.classroom || "N/A"}</span>
+                                        <span>{item.enrollmentCountForSchoolYear}</span>
+                                        <span>{item.maxCapacity}</span>
+                                        <span>{item.schoolYear}</span>
 
                                         {item.active ? (
                                             <ActiveTag>active</ActiveTag>
@@ -154,11 +153,11 @@ function Students() {
                                             <InactiveTag>inactive</InactiveTag>
                                         )}
 
-                                        <S.ActionButtons>
+                                        <ActionButtons>
                                             <EditButton
                                                 onClick={() => {
-                                                    setSelectedStudent(item);
-                                                    setStudentEditModal(true);
+                                                    setSelectedClassroom(item);
+                                                    setClassroomEditModal(true);
                                                 }}
                                             >
                                                 edit
@@ -167,8 +166,8 @@ function Students() {
                                             {item.active ? (
                                                 <DeactivateButton
                                                     onClick={() => {
-                                                        setSelectedStudent(item);
-                                                        setDeactivateStudentModal(true);
+                                                        setSelectedClassroom(item);
+                                                        setDeactivateClassroomModal(true);
                                                     }}
                                                 >
                                                     deactivate
@@ -176,23 +175,23 @@ function Students() {
                                             ) : (
                                                 <ActivateButton
                                                     onClick={() => {
-                                                        setSelectedStudent(item);
-                                                        setActivateStudentModal(true);
+                                                        setSelectedClassroom(item);
+                                                        setActivateClassroomModal(true);
                                                     }}
                                                 >
                                                     activate
                                                 </ActivateButton>
                                             )}
-                                        </S.ActionButtons>
-                                    </S.StudentRow>
+                                        </ActionButtons>
+                                    </ClassroomRow>
                                 ))}
-                            </S.StudentList>
+                            </ClassroomList>
                         </Container>
                     </MainContent>
-                </S.StudentContainer>
+                </ClassroomContainer>
             </SectionWrapper>
         </>
-    );
+    )
 }
 
-export default Students;
+export default Classrooms;

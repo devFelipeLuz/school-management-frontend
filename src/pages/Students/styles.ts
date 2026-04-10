@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CancelButton, DefaultButton, SuccessButton } from "../../components/Button/styles";
 import { LargeInput } from "../../components/Input/styles";
 
 export const StudentContainer = styled.div`
