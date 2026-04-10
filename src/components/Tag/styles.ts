@@ -24,3 +24,7 @@ export const ActiveTag = styled(DefaultTag)`
 export const InactiveTag = styled(DefaultTag)`
   background-color: red;
 `
+
+export const FinishedTag = styled(DefaultTag)`
+  background-color: rgb(50, 50, 50)
+`

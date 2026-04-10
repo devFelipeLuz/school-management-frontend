@@ -1,11 +1,6 @@
-import Container from "../../components/Container/Container";
-import Header from "../../components/Header/Header";
 import { LargeInput } from "../../components/Input/styles";
-import MainContent from "../../components/MainContent/MainContent";
-import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 import SelectStatus from "../../components/SelectStatus/SelectStatus";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import { ActionButtons, Group, InputGroup, SchoolyearContainer, SchoolyearList, SchoolyearRow, TableHeader } from "./styles";
+import { ActionButtons, Group, InputGroup, SchoolyearList, SchoolyearRow, TableHeader } from "./styles";
 import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from "../../components/Button/styles";
 import { useSchoolyear } from "../../hooks/useSchoolyears";
 import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
@@ -14,6 +9,7 @@ import Modal from "../../components/Modal/Modal";
 import SchoolyearCreationCard from "../../components/Card/SchoolyearCreationCard/SchoolyearCreationCard";
 import SchoolyearEditCard from "../../components/Card/SchoolyearEditCard/SchoolyearEditCard";
 import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
+import PageSetup from "../../components/PageSetup/PageSetup";
 
 function SchoolYear() {
     const {
@@ -104,88 +100,79 @@ function SchoolYear() {
                 </Modal>
             }
 
-            <SectionWrapper>
-                <Header />
+            <PageSetup>
+                <Group>
+                    <InputGroup>
+                        <LargeInput
+                            type="text"
+                            placeholder="Type the year"
+                            value={yearFilter}
+                            onChange={(e) => setYearFilter(e.target.value)}
+                        />
+                        <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                    </InputGroup>
+                    <NewEntityButton
+                        type="button"
+                        onClick={() => setSchoolYearCreationModal(true)}
+                    >
+                        + New School Year
+                    </NewEntityButton>
+                </Group>
 
-                <SchoolyearContainer>
-                    <Sidebar />
-                    <MainContent>
-                        <Container>
-                            <Group>
-                                <InputGroup>
-                                    <LargeInput
-                                        type="text"
-                                        placeholder="Type the year"
-                                        value={yearFilter}
-                                        onChange={(e) => setYearFilter(e.target.value)}
-                                    />
-                                    <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                                </InputGroup>
-                                <NewEntityButton
-                                    type="button"
-                                    onClick={() => setSchoolYearCreationModal(true)}
+                <TableHeader>
+                    <span>ID</span>
+                    <span>Year</span>
+                    <span>Start Date</span>
+                    <span>Status</span>
+                    <span>Actions</span>
+                </TableHeader>
+
+                <SchoolyearList>
+                    {schoolyears.map((item) => (
+                        <SchoolyearRow key={item.id}>
+                            <span>{item.id}</span>
+                            <span>{item.year}</span>
+                            <span>{new Date(item.startDate).toLocaleDateString('pt-BR')}</span>
+                            {item.active ? (
+                                <ActiveTag>active</ActiveTag>
+                            ) : (
+                                <InactiveTag>inactive</InactiveTag>
+                            )}
+
+                            <ActionButtons>
+                                <EditButton onClick={() => {
+                                    setSelectedSchoolyear(item);
+                                    setSchoolyearEditModal(true);
+                                }}
+
                                 >
-                                    + New School Year
-                                </NewEntityButton>
-                            </Group>
+                                    edit
+                                </EditButton>
 
-                            <TableHeader>
-                                <span>ID</span>
-                                <span>Year</span>
-                                <span>Start Date</span>
-                                <span>Status</span>
-                                <span>Actions</span>
-                            </TableHeader>
+                                {item.active ? (
+                                    <DeactivateButton onClick={() => {
+                                        setSelectedSchoolyear(item);
+                                        setDeactivateSchoolyearModal(true);
+                                    }}
+                                    >
+                                        deactivate
+                                    </DeactivateButton>
+                                ) : (
+                                    <ActivateButton
+                                        onClick={() => {
+                                            setSelectedSchoolyear(item);
+                                            setActivateSchoolyearModal(true);
+                                        }}
+                                    >
+                                        activate
+                                    </ActivateButton>
+                                )}
 
-                            <SchoolyearList>
-                                {schoolyears.map((item) => (
-                                    <SchoolyearRow key={item.id}>
-                                        <span>{item.id}</span>
-                                        <span>{item.year}</span>
-                                        <span>{new Date(item.startDate).toLocaleDateString('pt-BR')}</span>
-                                        {item.active ? (
-                                            <ActiveTag>active</ActiveTag>
-                                        ) : (
-                                            <InactiveTag>inactive</InactiveTag>
-                                        )}
-
-                                        <ActionButtons>
-                                            <EditButton onClick={() => {
-                                                setSelectedSchoolyear(item);
-                                                setSchoolyearEditModal(true);
-                                            }}
-
-                                            >
-                                                edit
-                                            </EditButton>
-
-                                            {item.active ? (
-                                                <DeactivateButton onClick={() => {
-                                                    setSelectedSchoolyear(item);
-                                                    setDeactivateSchoolyearModal(true);
-                                                }}
-                                                >
-                                                    deactivate
-                                                </DeactivateButton>
-                                            ) : (
-                                                <ActivateButton
-                                                    onClick={() => {
-                                                        setSelectedSchoolyear(item);
-                                                        setActivateSchoolyearModal(true);
-                                                    }}
-                                                >
-                                                    activate
-                                                </ActivateButton>
-                                            )}
-
-                                        </ActionButtons>
-                                    </SchoolyearRow>
-                                ))}
-                            </SchoolyearList>
-                        </Container>
-                    </MainContent>
-                </SchoolyearContainer>
-            </SectionWrapper>
+                            </ActionButtons>
+                        </SchoolyearRow>
+                    ))}
+                </SchoolyearList>
+            </PageSetup>
         </>
     )
 }

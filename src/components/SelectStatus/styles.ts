@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const StatusSelect = styled.select`
   display: flex;
   text-align: center;
+  text-align-last: center; /* Garante a centralização em alguns navegadores */
+  -moz-text-align-last: center;
   width: 120px;
   height: 48px;
 
@@ -14,4 +16,8 @@ export const StatusSelect = styled.select`
 
   color: #fff;
   background-color: #0e1116;
+
+  option {
+    text-align: center;
+  }
 `

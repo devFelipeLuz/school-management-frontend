@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import { LargeInput } from "../../components/Input/styles";
 
-export const StudentContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-`
-
 export const Group = styled.div`
   display: flex;
   justify-content: space-between;
@@ -37,7 +31,7 @@ export const StudentList = styled.div`
 
 export const StudentRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr;
   align-items: center;
 
   width: 100%;
@@ -53,7 +47,7 @@ export const StudentRow = styled.div`
 
 export const TableHeader = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1.5fr 1.5fr 1fr 1fr 1fr;
   width: 100%;
   padding: 0 20px;
   margin-bottom: 8px;

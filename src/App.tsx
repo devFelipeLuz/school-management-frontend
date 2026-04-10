@@ -5,6 +5,7 @@ import DashboardPage from './pages/Dashboard/DashboardPage'
 import Students from './pages/Students/Students'
 import SchoolYear from './pages/SchoolYear/SchoolYear'
 import Classrooms from './pages/Classrooms/Classrooms'
+import Enrollments from './pages/Enrollments/Enrollments'
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("accessToken");
@@ -20,6 +21,7 @@ function App() {
         <Route path='/dashboard' element={<DashboardPage />} />
         <Route path='/students' element={<Students />} />
         <Route path='/classrooms' element={<Classrooms />} />
+        <Route path='/enrollments' element={<Enrollments />} />
         <Route path='/school-years' element={<SchoolYear />} />
       </Routes>
     </BrowserRouter>

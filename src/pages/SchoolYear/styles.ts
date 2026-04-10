@@ -1,10 +1,6 @@
 import styled from "styled-components"
 import { LargeInput } from "../../components/Input/styles"
 
-export const SchoolyearContainer = styled.div`
-    display: flex;
-`
-
 export const Group = styled.div`
     display: flex;
     justify-content: space-between;

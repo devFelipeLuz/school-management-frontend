@@ -1,5 +1,3 @@
-import Header from "../../components/Header/Header";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import * as S from "./styles";
 import Modal from "../../components/Modal/Modal";
 import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
@@ -9,11 +7,9 @@ import { LargeInput } from "../../components/Input/styles";
 import StudentEditCard from "../../components/Card/StudentEditCard/StudentEditCard";
 import { useStudents } from "../../hooks/useStudents";
 import { useState } from "react";
-import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
-import MainContent from "../../components/MainContent/MainContent";
-import Container from "../../components/Container/Container";
 import SelectStatus from "../../components/SelectStatus/SelectStatus";
 import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
+import PageSetup from "../../components/PageSetup/PageSetup";
 
 function Students() {
     const {
@@ -103,94 +99,86 @@ function Students() {
                     />
                 </Modal>}
 
-            <SectionWrapper>
-                <Header />
-                <S.StudentContainer>
-                    <Sidebar />
-                    <MainContent>
-                        <Container>
-                            <S.Group>
-                                <S.InputGroup>
-                                    <LargeInput
-                                        type="text"
-                                        placeholder="Filter by name"
-                                        value={nameFilter}
-                                        onChange={(e) => setNamefilter(e.target.value)}
-                                    />
-                                    <LargeInput
-                                        type="text"
-                                        placeholder="Filter by email"
-                                        value={emailFilter}
-                                        onChange={(e) => setEmailFilter(e.target.value)}
-                                    />
-                                    <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                                </S.InputGroup>
+            <PageSetup>
+                <S.Group>
+                    <S.InputGroup>
+                        <LargeInput
+                            type="text"
+                            placeholder="Filter by name"
+                            value={nameFilter}
+                            onChange={(e) => setNamefilter(e.target.value)}
+                        />
+                        <LargeInput
+                            type="text"
+                            placeholder="Filter by email"
+                            value={emailFilter}
+                            onChange={(e) => setEmailFilter(e.target.value)}
+                        />
+                        <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                    </S.InputGroup>
 
-                                <NewEntityButton
-                                    type="button"
-                                    onClick={() => setStudentCreationModal(true)}>
-                                    + New Student
-                                </NewEntityButton>
-                            </S.Group>
-                            <S.TableHeader>
-                                <span>ID</span>
-                                <span>Name</span>
-                                <span>Email</span>
-                                <span>Classroom</span>
-                                <span>Status</span>
-                                <span>Actions</span>
-                            </S.TableHeader>
-                            <S.StudentList>
-                                {students.map((item) => (
-                                    <S.StudentRow key={item.id}>
-                                        <span>{item.id.slice(0, 8)}...</span>
-                                        <span>{item.name}</span>
-                                        <span>{item.email}</span>
-                                        <span>{item.classroom || "N/A"}</span>
+                    <NewEntityButton
+                        type="button"
+                        onClick={() => setStudentCreationModal(true)}>
+                        + New Student
+                    </NewEntityButton>
+                </S.Group>
+                <S.TableHeader>
+                    <span>ID</span>
+                    <span>Name</span>
+                    <span>Email</span>
+                    <span>Classroom</span>
+                    <span>Status</span>
+                    <span>Actions</span>
+                </S.TableHeader>
+                <S.StudentList>
+                    {students.map((item) => (
+                        <S.StudentRow key={item.id}>
+                            <span>{item.id}</span>
+                            <span>{item.name}</span>
+                            <span>{item.email}</span>
+                            <span>{item.classroom || "N/A"}</span>
 
-                                        {item.active ? (
-                                            <ActiveTag>active</ActiveTag>
-                                        ) : (
-                                            <InactiveTag>inactive</InactiveTag>
-                                        )}
+                            {item.active ? (
+                                <ActiveTag>active</ActiveTag>
+                            ) : (
+                                <InactiveTag>inactive</InactiveTag>
+                            )}
 
-                                        <S.ActionButtons>
-                                            <EditButton
-                                                onClick={() => {
-                                                    setSelectedStudent(item);
-                                                    setStudentEditModal(true);
-                                                }}
-                                            >
-                                                edit
-                                            </EditButton>
+                            <S.ActionButtons>
+                                <EditButton
+                                    onClick={() => {
+                                        setSelectedStudent(item);
+                                        setStudentEditModal(true);
+                                    }}
+                                >
+                                    edit
+                                </EditButton>
 
-                                            {item.active ? (
-                                                <DeactivateButton
-                                                    onClick={() => {
-                                                        setSelectedStudent(item);
-                                                        setDeactivateStudentModal(true);
-                                                    }}
-                                                >
-                                                    deactivate
-                                                </DeactivateButton>
-                                            ) : (
-                                                <ActivateButton
-                                                    onClick={() => {
-                                                        setSelectedStudent(item);
-                                                        setActivateStudentModal(true);
-                                                    }}
-                                                >
-                                                    activate
-                                                </ActivateButton>
-                                            )}
-                                        </S.ActionButtons>
-                                    </S.StudentRow>
-                                ))}
-                            </S.StudentList>
-                        </Container>
-                    </MainContent>
-                </S.StudentContainer>
-            </SectionWrapper>
+                                {item.active ? (
+                                    <DeactivateButton
+                                        onClick={() => {
+                                            setSelectedStudent(item);
+                                            setDeactivateStudentModal(true);
+                                        }}
+                                    >
+                                        deactivate
+                                    </DeactivateButton>
+                                ) : (
+                                    <ActivateButton
+                                        onClick={() => {
+                                            setSelectedStudent(item);
+                                            setActivateStudentModal(true);
+                                        }}
+                                    >
+                                        activate
+                                    </ActivateButton>
+                                )}
+                            </S.ActionButtons>
+                        </S.StudentRow>
+                    ))}
+                </S.StudentList>
+            </PageSetup>
         </>
     );
 }
