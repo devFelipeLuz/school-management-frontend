@@ -1,44 +1,11 @@
 import styled from "styled-components";
-import { CancelButton, DefaultButton, NewStudentButton, SuccessButton } from "../../components/Button/styles";
+import { CancelButton, DefaultButton, SuccessButton } from "../../components/Button/styles";
 import { LargeInput } from "../../components/Input/styles";
-
-export const StudentsWrapper = styled.section`
-  min-height: 100vh;
-  max-height: 100%;
-  background: linear-gradient(
-    135deg,
-    #0f172a 0%,
-    #1e293b 50%,
-    #334155 100%
-  );
-  color: white;
-`
 
 export const StudentContainer = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-`
-
-export const MainContent = styled.div`
-  flex: 1;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
-`
-
-export const Container = styled.div`
-  max-width: 1680px;
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
 `
 
 export const Group = styled.div`
@@ -61,22 +28,6 @@ export const InputGroup = styled.div`
   ${LargeInput} {
     width: 50%;
   }
-`
-
-export const StatusSelect = styled.select`
-  display: flex;
-  text-align: center;
-  width: 120px;
-  height: 48px;
-
-  border: none;
-  border-radius: 8px;
-  outline: none;
-
-  font-size: 16px;
-
-  color: #fff;
-  background-color: #0e1116;
 `
 
 export const StudentList = styled.div`
@@ -113,65 +64,8 @@ export const TableHeader = styled.div`
     font-weight: 600;
   }
 `
-
-export const EditStudentButton = styled(DefaultButton)`
-  width: 96px;
-  height: 32px;
-
-  background: #0e1116;
-  color: #fff;
-
-  &:hover {
-    background-color: #181d25b7;
-  }
-`
-
-export const DeactivateButton = styled(CancelButton)`
-  width: 96px;
-  height: 32px;
-`
-
-export const ActivateButton = styled(SuccessButton)`
-  width: 96px;
-  height: 32px;
-`
-
 export const ActionButtons = styled.div`
   display: flex;
   gap: 8px;
   justify-content: center;
-`
-
-export const ActiveTag = styled.span`
-  justify-self: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 72px;
-  height: 32px;
-  padding: 0 12px;
-
-  color: #fff;
-  background-color: darkgreen;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-`
-
-export const InactiveTag = styled.span`
-  justify-self: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 72px;
-  height: 32px;
-  padding: 0 12px;
-
-  color: #fff;
-  background-color: red;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
 `

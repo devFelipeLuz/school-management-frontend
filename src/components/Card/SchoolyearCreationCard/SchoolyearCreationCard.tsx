@@ -1,6 +1,6 @@
-import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
 import Modal from "../../Modal/Modal";
-import StudentCardForm from "../CardForm/StudentCardForm";
+import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
+import SchoolyearCardForm from "../CardForm/SchoolyearCardForm";
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 
 interface CreationProps {
@@ -12,12 +12,13 @@ interface CreationProps {
     setError: Dispatch<SetStateAction<boolean>>;
 }
 
-function StudentCreationCard({ closeModal, handleCreate, isFinished, setIsFinished, error, setError }: CreationProps) {
+function SchoolyearCreationCard({ closeModal, handleCreate, isFinished, setIsFinished, error, setError }: CreationProps) {
+
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Student created successfully"
+                    text="School Year created successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -45,11 +46,12 @@ function StudentCreationCard({ closeModal, handleCreate, isFinished, setIsFinish
     }
 
     return (
-        <StudentCardForm
+        <SchoolyearCardForm
             submit={handleCreate}
             closeModal={closeModal}
-            title="Register a New Student"
-        />)
+            title="Register a new School Year"
+        />
+    )
 }
 
-export default StudentCreationCard;
+export default SchoolyearCreationCard;

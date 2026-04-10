@@ -3,12 +3,12 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import CountCard from "../../components/Card/CountCard/CountCard";
 
 import {
-  DashboardWrapper,
   MainLayout,
   Content,
   CardsGrid
 } from "./styles";
 import { useDashboardCounts } from "../../hooks/useDashboardCounts";
+import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
 
 function DashboardPage() {
   const {counts, loading, error} = useDashboardCounts();
@@ -17,7 +17,7 @@ function DashboardPage() {
   if (error) return <p>{error}</p>*/
 
   return (
-    <DashboardWrapper>
+    <SectionWrapper>
       <Header />
 
       <MainLayout>
@@ -34,7 +34,7 @@ function DashboardPage() {
           </CardsGrid>
         </Content>
       </MainLayout>
-    </DashboardWrapper>
+    </SectionWrapper>
   );
 }
 

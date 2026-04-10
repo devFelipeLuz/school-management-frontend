@@ -4,11 +4,16 @@ import * as S from "./styles";
 import Modal from "../../components/Modal/Modal";
 import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
 import StudentCreationCard from "../../components/Card/StudentCreationCard/StudentCreationCard";
-import { NewStudentButton } from "../../components/Button/styles";
+import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from "../../components/Button/styles";
 import { LargeInput } from "../../components/Input/styles";
 import StudentEditCard from "../../components/Card/StudentEditCard/StudentEditCard";
 import { useStudents } from "../../hooks/useStudents";
 import { useState } from "react";
+import SectionWrapper from "../../components/SectionWrapper/SectionWrapper";
+import MainContent from "../../components/MainContent/MainContent";
+import Container from "../../components/Container/Container";
+import SelectStatus from "../../components/SelectStatus/SelectStatus";
+import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
 
 function Students() {
     const {
@@ -26,7 +31,14 @@ function Students() {
         emailFilter,
         setEmailFilter,
 
-        fetchStudents,
+        isFinished,
+        setIsFinished,
+
+        error,
+        setError,
+
+        handleCreate,
+        handleUpdate,
         handleActivate,
         handleDeactivate
     } = useStudents();
@@ -42,7 +54,11 @@ function Students() {
                 <Modal>
                     <StudentCreationCard
                         closeModal={() => setStudentCreationModal(false)}
-                        fetchStudents={fetchStudents}
+                        handleCreate={handleCreate}
+                        isFinished={isFinished}
+                        setIsFinished={setIsFinished}
+                        error={error}
+                        setError={setError}
                     />
                 </Modal>}
 
@@ -54,7 +70,11 @@ function Students() {
                             setSelectedStudent(null);
                             setStudentEditModal(false);
                         }}
-                        fetchStudents={fetchStudents}
+                        handleUpdate={handleUpdate}
+                        isFinished={isFinished}
+                        setIsFinished={setIsFinished}
+                        error={error}
+                        setError={setError}
                     />
                 </Modal>
             }
@@ -81,12 +101,12 @@ function Students() {
                     />
                 </Modal>}
 
-            <S.StudentsWrapper>
+            <SectionWrapper>
                 <Header />
                 <S.StudentContainer>
                     <Sidebar />
-                    <S.MainContent>
-                        <S.Container>
+                    <MainContent>
+                        <Container>
                             <S.Group>
                                 <S.InputGroup>
                                     <LargeInput
@@ -101,20 +121,14 @@ function Students() {
                                         value={emailFilter}
                                         onChange={(e) => setEmailFilter(e.target.value)}
                                     />
-                                    <S.StatusSelect
-                                        value={activeFilter}
-                                        onChange={(e) => setActiveFilter(e.target.value)}
-                                    >
-                                        <option value="">All</option>
-                                        <option value="true">Active</option>
-                                        <option value="false">Inactive</option>
-                                    </S.StatusSelect>
+                                    <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                                 </S.InputGroup>
-                                <NewStudentButton
+
+                                <NewEntityButton
                                     type="button"
                                     onClick={() => setStudentCreationModal(true)}>
                                     + New Student
-                                </NewStudentButton>
+                                </NewEntityButton>
                             </S.Group>
                             <S.TableHeader>
                                 <span>ID</span>
@@ -133,48 +147,48 @@ function Students() {
                                         <span>{item.classroom || "N/A"}</span>
 
                                         {item.active ? (
-                                            <S.ActiveTag>active</S.ActiveTag>
+                                            <ActiveTag>active</ActiveTag>
                                         ) : (
-                                            <S.InactiveTag>inactive</S.InactiveTag>
+                                            <InactiveTag>inactive</InactiveTag>
                                         )}
 
                                         <S.ActionButtons>
-                                            <S.EditStudentButton
+                                            <EditButton
                                                 onClick={() => {
                                                     setSelectedStudent(item);
                                                     setStudentEditModal(true);
                                                 }}
                                             >
                                                 edit
-                                            </S.EditStudentButton>
+                                            </EditButton>
 
                                             {item.active ? (
-                                                <S.DeactivateButton
+                                                <DeactivateButton
                                                     onClick={() => {
                                                         setSelectedStudent(item);
                                                         setDeactivateStudentModal(true);
                                                     }}
                                                 >
                                                     deactivate
-                                                </S.DeactivateButton>
+                                                </DeactivateButton>
                                             ) : (
-                                                <S.ActivateButton
+                                                <ActivateButton
                                                     onClick={() => {
                                                         setSelectedStudent(item);
                                                         setActivateStudentModal(true);
                                                     }}
                                                 >
                                                     activate
-                                                </S.ActivateButton>
+                                                </ActivateButton>
                                             )}
                                         </S.ActionButtons>
                                     </S.StudentRow>
                                 ))}
                             </S.StudentList>
-                        </S.Container>
-                    </S.MainContent>
+                        </Container>
+                    </MainContent>
                 </S.StudentContainer>
-            </S.StudentsWrapper >
+            </SectionWrapper>
         </>
     );
 }

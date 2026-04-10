@@ -1,3 +1,5 @@
+import { getAuthHeaders } from "../utils/auth";
+
 export interface Student {
     id: string;
     name: string;
@@ -13,15 +15,6 @@ interface StudentFilters {
 }
 
 const BASE_URL = "http://localhost:8080/students";
-
-function getAuthHeaders() {
-    const token = localStorage.getItem("accessToken");
-
-    return {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-    };
-}
 
 export async function getStudents(filters?: StudentFilters) {
     const params = new URLSearchParams();
@@ -60,7 +53,7 @@ export async function deactivateStudent(id: string) {
     });
 
     if (!response.ok) {
-        throw new Error("Erro ao desativar estudante");
+        throw new Error("Error when deactivating student");
     }
 }
 
@@ -71,6 +64,6 @@ export async function activateStudent(id: string) {
     });
 
     if (!response.ok) {
-        throw new Error("Erro ao ativar estudante");
+        throw new Error("Error when activating student");
     }
 }

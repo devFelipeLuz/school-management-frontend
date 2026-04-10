@@ -4,8 +4,9 @@ import {
     deactivateStudent,
     activateStudent
 } from "../services/studentService";
+import { getAuthHeaders } from "../utils/auth";
 
-export interface Student {
+export interface Students {
     id: string;
     name: string;
     email: string;
@@ -14,8 +15,8 @@ export interface Student {
 }
 
 export function useStudents() {
-    const [students, setStudents] = useState<Student[]>([]);
-    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+    const [students, setStudents] = useState<Students[]>([]);
+    const [selectedStudent, setSelectedStudent] = useState<Students | null>(null);
 
     const [activeFilter, setActiveFilter] = useState("");
     const [nameFilter, setNamefilter] = useState("");
@@ -24,7 +25,10 @@ export function useStudents() {
     const [debouncedName, setDebouncedName] = useState("");
     const [debouncedEmail, setDebouncedEmail] = useState("");
 
-    const[initialLoading, setInitialLoading] = useState(false);
+    const [isFinished, setIsFinished] = useState(false);
+    const [error, setError] = useState(false);
+
+    const postEndpoint = "http://localhost:8080/students";
 
     const fetchStudents = async () => {
         try {
@@ -43,6 +47,67 @@ export function useStudents() {
 
             console.error(error);
 
+        }
+    };
+
+    const handleCreate = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        const createData = {
+            name: (document.getElementById("student-name") as HTMLInputElement).value,
+            email: (document.getElementById("student-email") as HTMLInputElement).value,
+            password: (document.getElementById("student-password") as HTMLInputElement).value
+        };
+
+        try {
+            const response = await fetch(postEndpoint, {
+                method: "POST",
+                headers: getAuthHeaders(),
+                body: JSON.stringify(createData),
+
+            });
+
+            if (response.ok) {
+                fetchStudents();
+                setIsFinished(true);
+
+            } else {
+                setError(true);
+
+            }
+
+        } catch (error) {
+            console.error("Network error:", error);
+        }
+    }
+
+    const handleUpdate = async (event: React.FormEvent, id: string) => {
+        event.preventDefault();
+
+        const updateData = {
+            name: (document.getElementById("student-name") as HTMLInputElement).value,
+            email: (document.getElementById("student-email") as HTMLInputElement).value,
+            password: (document.getElementById("student-password") as HTMLInputElement).value
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/students/${id}`, {
+                method: "PATCH",
+                headers: getAuthHeaders(),
+                body: JSON.stringify(updateData),
+            });
+
+            if (response.ok) {
+                fetchStudents();
+                setIsFinished(true);
+
+            } else {
+                setError(true);
+
+            }
+
+        } catch (error) {
+            console.error("Network error:", error);
         }
     };
 
@@ -71,7 +136,7 @@ export function useStudents() {
         } catch (error) {
             console.error(error);
 
-        } 
+        }
     };
 
     useEffect(() => {
@@ -89,7 +154,6 @@ export function useStudents() {
 
     return {
         students,
-        initialLoading,
 
         selectedStudent,
         setSelectedStudent,
@@ -109,7 +173,15 @@ export function useStudents() {
         debouncedEmail,
         setDebouncedEmail,
 
+        isFinished,
+        setIsFinished,
+
+        error,
+        setError,
+
         fetchStudents,
+        handleCreate,
+        handleUpdate,
         handleActivate,
         handleDeactivate
     };

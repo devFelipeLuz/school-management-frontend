@@ -41,7 +41,7 @@ export const SuccessButton = styled(DefaultButton)`
     }
 `
 
-export const NewStudentButton = styled(DefaultButton)`
+export const NewEntityButton = styled(DefaultButton)`
     height: 48px;
     width: auto;
     padding: 24px;
@@ -57,4 +57,26 @@ export const NewStudentButton = styled(DefaultButton)`
     &:hover {
       background: green;
     }
+`
+
+export const EditButton = styled(DefaultButton)`
+  width: 96px;
+  height: 32px;
+
+  background: #0e1116;
+  color: #fff;
+
+  &:hover {
+    background-color: #181d25b7;
+  }
+`
+
+export const DeactivateButton = styled(CancelButton)`
+  width: 96px;
+  height: 32px;
+`
+
+export const ActivateButton = styled(SuccessButton)`
+  width: 96px;
+  height: 32px;
 `

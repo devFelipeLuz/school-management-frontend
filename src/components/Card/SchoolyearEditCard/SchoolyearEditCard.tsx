@@ -1,28 +1,26 @@
-import { type Dispatch, type FormEvent, type SetStateAction } from "react";
+import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import StudentCardForm from "../CardForm/StudentCardForm";
+import SchoolyearCardForm from "../CardForm/SchoolyearCardForm";
 
-interface Student {
-    id: string,
-    name: string,
-    email: string
+interface Schoolyears {
+    id: string;
+    year: number;
 }
 
 interface CardProps {
-    student: Student;
+    schoolyears: Schoolyears;
     closeModal: () => void;
     handleUpdate: (event: FormEvent, id: string) => void;
-    isFinished: boolean;
+    isFinished: boolean,
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
 }
 
+function SchooyearEditCard({ schoolyears, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: CardProps) {
 
-function StudentEditCard({ student, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: CardProps) {
-
-    const onSave = (e: React.FormEvent) => handleUpdate(e, student.id);
+    const onSave = (e: React.FormEvent) => handleUpdate(e, schoolyears.id);
 
     if (isFinished) {
         return (
@@ -44,26 +42,25 @@ function StudentEditCard({ student, closeModal, handleUpdate, isFinished, setIsF
     if (error) {
         return (
             <Modal>
-                <ConfirmationCard
-                    text="An unexpected error occurred"
-                    cancelTextButton="close"
-                    successTextButton="confirm"
-                    confirm={() => setError(false)}
-                    cancel={closeModal}
+                <ConfirmationCard 
+                text="An unexpected error occured"
+                cancelTextButton="close"
+                successTextButton="confirm"
+                confirm={() => setError(false)}
+                cancel={closeModal}
                 />
             </Modal>
         );
     }
 
     return (
-        <StudentCardForm
+        <SchoolyearCardForm
             title="Editing..."
             submit={onSave}
             closeModal={closeModal}
-            name={student.name}
-            email={student.email}
-            placeholder="Leave it blank to keep current"
-        />)
+            year={schoolyears.year}
+        />
+    )
 }
 
-export default StudentEditCard;
+export default SchooyearEditCard;
