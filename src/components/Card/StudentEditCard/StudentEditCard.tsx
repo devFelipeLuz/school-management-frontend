@@ -20,7 +20,14 @@ interface EditCardProps {
 }
 
 
-function StudentEditCard({ student, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: EditCardProps) {
+function StudentEditCard({
+    student,
+    closeModal,
+    handleUpdate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError }: EditCardProps) {
 
     const onSave = (e: React.FormEvent) => handleUpdate(e, student.id);
 

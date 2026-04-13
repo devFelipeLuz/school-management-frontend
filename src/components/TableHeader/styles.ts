@@ -16,3 +16,7 @@ export const DefaultHeader = styled.div`
 export const ProfessorHeader = styled(DefaultHeader)`
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
 `
+
+export const SubjectHeader = styled(DefaultHeader)`
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+`

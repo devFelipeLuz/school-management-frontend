@@ -1,30 +1,39 @@
-import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import Modal from "../../Modal/Modal";
-import StudentCardForm from "../CardForm/StudentCardForm";
 import type { Dispatch, FormEvent, SetStateAction } from "react";
+import type { Subject } from "../../../services/subjectService";
+import Modal from "../../Modal/Modal";
+import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
+import SubjectCardForm from "../CardForm/SubjectCardForm";
 
-interface CreationProps {
+interface EditCardProps {
+    subject: Subject;
     closeModal: () => void;
-    handleCreate: (event: FormEvent) => void;
+    handleUpdate: (event: FormEvent, id: string) => void;
     isFinished: boolean;
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    name?: string;
+    setName?: Dispatch<SetStateAction<string>>;
 }
 
-function StudentCreationCard({
+function SubjectEditCard({
+    subject,
     closeModal,
-    handleCreate,
+    handleUpdate,
     isFinished,
     setIsFinished,
     error,
-    setError }: CreationProps) {
+    setError,
+    name,
+    setName }: EditCardProps) {
+
+    const onSave = (e: React.FormEvent) => handleUpdate(e, subject.id)
 
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Student created successfully"
+                    text="Updated successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -52,11 +61,14 @@ function StudentCreationCard({
     }
 
     return (
-        <StudentCardForm
-            submit={handleCreate}
+        <SubjectCardForm
+            title="Editing..."
+            submit={onSave}
             closeModal={closeModal}
-            title="Register a New Student"
+            name={name}
+            setName={setName}
+            placeholder="Leave it blank to keep current"
         />)
 }
 
-export default StudentCreationCard;
+export default SubjectEditCard;

@@ -1,7 +1,7 @@
-import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import Modal from "../../Modal/Modal";
-import StudentCardForm from "../CardForm/StudentCardForm";
 import type { Dispatch, FormEvent, SetStateAction } from "react";
+import Modal from "../../Modal/Modal";
+import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
+import SubjectCardForm from "../CardForm/SubjectCardForm";
 
 interface CreationProps {
     closeModal: () => void;
@@ -10,21 +10,25 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    name?: string;
+    setName?: Dispatch<SetStateAction<string>>;
 }
 
-function StudentCreationCard({
+function SubjectCreationCard({
     closeModal,
     handleCreate,
     isFinished,
     setIsFinished,
     error,
-    setError }: CreationProps) {
+    setError,
+    name,
+    setName }: CreationProps) {
 
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Student created successfully"
+                    text="Subject created successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -52,11 +56,13 @@ function StudentCreationCard({
     }
 
     return (
-        <StudentCardForm
+        <SubjectCardForm
             submit={handleCreate}
             closeModal={closeModal}
-            title="Register a New Student"
+            title="Register a New Subject"
+            name={name}
+            setName={setName}
         />)
 }
 
-export default StudentCreationCard;
+export default SubjectCreationCard;
