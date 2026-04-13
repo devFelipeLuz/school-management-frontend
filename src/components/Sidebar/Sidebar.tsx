@@ -96,7 +96,7 @@ function Sidebar() {
             <span>School Year</span>
           </SidebarItem>
 
-          <SidebarItem onClick={() => navigate("/school-years")}>
+          <SidebarItem onClick={() => navigate("/users")}>
             <FaUser />
             <span>Users</span>
           </SidebarItem>

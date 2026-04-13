@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StatusSelect } from "../../SelectStatus/styles";
 
 export const Section = styled.section`
     position: relative;
@@ -48,4 +49,8 @@ export const ButtonGroup = styled.div`
 export const Label = styled.label`
     margin-bottom: 4px;
     color: #fff;
+`
+
+export const SelectRole = styled(StatusSelect)`
+    width: 100%;
 `
