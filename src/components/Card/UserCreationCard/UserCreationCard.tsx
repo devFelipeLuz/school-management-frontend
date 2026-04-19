@@ -1,7 +1,7 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import UserCardForm from "../CardForm/UserCardForm";
+import UserForm from "../CardForm/UserCardForm";
 
 interface CreationProps {
     closeModal: () => void;
@@ -10,9 +10,28 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    email: string;
+    setEmail: Dispatch<SetStateAction<string>>;
+    password: string;
+    setPassword: Dispatch<SetStateAction<string>>;
+    role: string;
+    setRole: Dispatch<SetStateAction<string>>;
 }
 
-function UserCreationCard({ closeModal, handleCreate, isFinished, setIsFinished, error, setError }: CreationProps) {
+function UserCreationCard({
+    closeModal,
+    handleCreate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    role,
+    setRole }: CreationProps) {
+
     if (isFinished) {
         return (
             <Modal>
@@ -45,10 +64,16 @@ function UserCreationCard({ closeModal, handleCreate, isFinished, setIsFinished,
     }
 
     return (
-        <UserCardForm
+        <UserForm
             submit={handleCreate}
             closeModal={closeModal}
             title="Register a New User"
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            role={role}
+            setRole={setRole}
         />)
 }
 

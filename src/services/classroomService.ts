@@ -27,7 +27,7 @@ export async function getClassrooms(filters?: ClassroomFilters) {
         params.append("active", String(filters.active));
     }
 
-    const response = await fetch(`$BASE_URL{?${params.toString()}`, {
+    const response = await fetch(`${BASE_URL}?${params.toString()}`, {
         headers: getAuthHeaders()
     });
 
@@ -61,7 +61,7 @@ export async function updateClassroom(name: string, newCapacity: number, id: str
 }
 
 export async function deactivateClassroom(id: string) {
-    const response = await fetch(`${BASE_URL}${id}/deactivate`, {
+    const response = await fetch(`${BASE_URL}/${id}/deactivate`, {
         method: "DELETE",
         headers: getAuthHeaders()
     });

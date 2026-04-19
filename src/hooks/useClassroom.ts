@@ -7,7 +7,7 @@ export function useClassrooms() {
 
     const [name, setName] = useState("");
     const [schoolYearId, setSchoolYearId] = useState("");
-    const [newCapacity, setNewCapacity] = useState(Number);
+    const [capacity, setCapacity] = useState(Number);
 
     const [activeFilter, setActiveFilter] = useState("");
     const [nameFilter, setNameFilter] = useState("");
@@ -34,6 +34,12 @@ export function useClassrooms() {
 
         }
     };
+
+    const clearState = () => {
+        setName("");
+        setSchoolYearId("");
+        setCapacity(0);
+    }
 
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -64,7 +70,7 @@ export function useClassrooms() {
         setError(false);
 
         try {
-            const response = await updateClassroom(name, newCapacity, id)
+            const response = await updateClassroom(name, capacity, id)
 
             if (response.ok) {
                 fetchClassrooms();
@@ -132,8 +138,8 @@ export function useClassrooms() {
         schoolYearId,
         setSchoolYearId,
 
-        newCapacity,
-        setNewCapacity,
+        capacity,
+        setCapacity,
 
         selectedClassroom,
         setSelectedClassroom,
@@ -150,6 +156,7 @@ export function useClassrooms() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleUpdate,
         handleDeactivate,

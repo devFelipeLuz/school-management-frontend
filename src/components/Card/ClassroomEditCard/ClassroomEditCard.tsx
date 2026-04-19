@@ -2,14 +2,7 @@ import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
 import ClassroomUpdateCardForm from "../CardForm/ClassroomUpdateCardForm";
-
-export interface Classroom {
-    id: string;
-    name: string;
-    enrollmentCountForSchoolYear: number;
-    maxCapacity: number;
-    active: boolean
-}
+import type { Classroom } from "../../../services/classroomService";
 
 interface EditCardProps {
     classroom: Classroom;
@@ -19,9 +12,26 @@ interface EditCardProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    name: string;
+    setName: Dispatch<SetStateAction<string>>;
+    schoolYearId: string;
+    setSchoolYearId: Dispatch<SetStateAction<string>>;
+    capacity: number;
+    setCapacity: Dispatch<SetStateAction<number>>;
 }
 
-function ClassroomEditCard({ classroom, handleUpdate, closeModal, isFinished, setIsFinished, error, setError }: EditCardProps) {
+function ClassroomEditCard({
+    classroom,
+    handleUpdate,
+    closeModal,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    name,
+    setName,
+    capacity,
+    setCapacity }: EditCardProps) {
 
     const onSave = (e: React.FormEvent) => handleUpdate(e, classroom.id);
 
@@ -61,7 +71,10 @@ function ClassroomEditCard({ classroom, handleUpdate, closeModal, isFinished, se
             title="Editing..."
             submit={onSave}
             closeModal={closeModal}
-            name={classroom.name}
+            name={name}
+            setName={setName}
+            capacity={capacity}
+            setCapacity={setCapacity}
         />
     )
 

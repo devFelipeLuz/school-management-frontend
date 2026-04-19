@@ -19,10 +19,29 @@ interface EditCardProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    email: string;
+    setEmail: Dispatch<SetStateAction<string>>;
+    password: string;
+    setPassword: Dispatch<SetStateAction<string>>;
+    role: string;
+    setRole: Dispatch<SetStateAction<string>>;
 }
 
 
-function UserEditCard({ user, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: EditCardProps) {
+function UserEditCard({
+    user,
+    closeModal,
+    handleUpdate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    role,
+    setRole }: EditCardProps) {
 
     const onSave = (e: React.FormEvent) => handleUpdate(e, user.id);
 
@@ -62,8 +81,12 @@ function UserEditCard({ user, closeModal, handleUpdate, isFinished, setIsFinishe
             title="Editing..."
             submit={onSave}
             closeModal={closeModal}
-            email={user.email}
-            password=""
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            role={role}
+            setRole={setRole}
             placeholder="Leave it blank to keep current"
         />)
 }

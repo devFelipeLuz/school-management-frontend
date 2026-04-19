@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import { CancelButton, SuccessButton } from "../../Button/styles";
 import Input from "../../Input/Input";
 import { ButtonGroup, Form, InputGroup, Label, Section, Title } from "./styles";
@@ -7,10 +8,19 @@ interface ClassroomCardFromProps {
     closeModal: () => void;
     title?: string;
     name?: string;
-    maxCapacity?: number;
+    setName?: Dispatch<SetStateAction<string>>;
+    capacity?: number;
+    setCapacity?: Dispatch<SetStateAction<number>>;
 }
 
-function ClassroomUpdateCardForm({ submit, closeModal, title, name, maxCapacity }: ClassroomCardFromProps) {
+function ClassroomUpdateCardForm({
+    submit,
+    closeModal,
+    title,
+    name,
+    setName = () => { },
+    capacity,
+    setCapacity = () => { } }: ClassroomCardFromProps) {
 
     return (
         <Section>
@@ -22,17 +32,19 @@ function ClassroomUpdateCardForm({ submit, closeModal, title, name, maxCapacity 
                         type="text"
                         name="classroom-name"
                         id="classroom-name"
-                        defaultValue={name}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </InputGroup>
 
                 <InputGroup>
                     <Label>New Max Capacity</Label>
-                    <Input 
-                    type="text"
-                    name="classroom-new-capacity"
-                    id="classroom-new-capacity"
-                    defaultValue={maxCapacity}
+                    <Input
+                        type="text"
+                        name="classroom-new-capacity"
+                        id="classroom-new-capacity"
+                        value={capacity}
+                        onChange={(e) => setCapacity(Number(e.target.value))}
                     />
                 </InputGroup>
 

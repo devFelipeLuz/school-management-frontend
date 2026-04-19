@@ -17,6 +17,16 @@ function Users() {
 
     const {
         users,
+        setUsers,
+
+        email,
+        setEmail,
+
+        password,
+        setPassword,
+
+        role,
+        setRole,
 
         selectedUser,
         setSelectedUser,
@@ -37,46 +47,63 @@ function Users() {
         setError,
 
         handleCreate,
+        clearState,
         handleUpdate,
         handleDeactivate,
         handleActivate
     } = useUsers();
 
-    const [userCreationModal, setUserCreationModal] = useState(false);
-    const [userEditModal, setUserEditModal] = useState(false);
+    const [createUserModal, setCreateUserModal] = useState(false);
+    const [editUserModal, setEditUserModal] = useState(false);
     const [activateUserModal, setActivateUserModal] = useState(false);
     const [deactivateUserModal, setDeactivateUserModal] = useState(false);
 
     return (
         <>
-            {userCreationModal &&
+            {createUserModal &&
                 <Modal>
                     <UserCreationCard
-                        closeModal={() => setUserCreationModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateUserModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
+                        role={role}
+                        setRole={setRole}
                     />
                 </Modal>
             }
 
-            {userEditModal &&
+            {editUserModal &&
                 <Modal>
                     <UserEditCard
                         user={selectedUser!}
                         closeModal={() => {
                             setSelectedUser(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
-                            setUserEditModal(false);
+                            setEditUserModal(false);
                         }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
+                        role={role}
+                        setRole={setRole}
                     />
                 </Modal>
             }
@@ -115,13 +142,13 @@ function Users() {
                             onChange={(e) => setEmailFilter(e.target.value)}
                         />
                         <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                        
+
                         <RoleSelect roleFilter={roleFilter} setRoleFilter={setRoleFilter} />
                     </InputGroup>
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setUserCreationModal(true)}
+                        onClick={() => setCreateUserModal(true)}
                     >
                         + New User
                     </NewEntityButton>
@@ -153,7 +180,10 @@ function Users() {
                                 <EditButton
                                     onClick={() => {
                                         setSelectedUser(item);
-                                        setUserEditModal(true);
+                                        setEmail(item.email);
+                                        setPassword("");
+                                        setRole(item.role);
+                                        setEditUserModal(true);
                                     }}
                                 >
                                     edit

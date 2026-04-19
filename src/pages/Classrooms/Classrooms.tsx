@@ -21,8 +21,8 @@ function Classrooms() {
         schoolYearId,
         setSchoolYearId,
 
-        newCapacity,
-        setNewCapacity,
+        capacity,
+        setCapacity,
 
         selectedClassroom,
         setSelectedClassroom,
@@ -39,6 +39,7 @@ function Classrooms() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleUpdate,
         handleDeactivate,
@@ -55,7 +56,10 @@ function Classrooms() {
             {createClassroomModal &&
                 <Modal>
                     <ClassroomCreationCard
-                        closeModal={() => setCreateClassroomModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateClassroomModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
@@ -75,6 +79,7 @@ function Classrooms() {
                         classroom={selectedClassroom!}
                         closeModal={() => {
                             setSelectedClassroom(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
                             setEditClassroomModal(false);
@@ -88,8 +93,8 @@ function Classrooms() {
                         setName={setName}
                         schoolYearId={schoolYearId}
                         setSchoolYearId={setSchoolYearId}
-                        newCapacity={newCapacity}
-                        setNewCapacity={setNewCapacity}
+                        capacity={Number(capacity)}
+                        setCapacity={setCapacity}
                     />
                 </Modal>
             }
@@ -167,6 +172,8 @@ function Classrooms() {
                                 <EditButton
                                     onClick={() => {
                                         setSelectedClassroom(item);
+                                        setName(item.name);
+                                        setCapacity(item.maxCapacity);
                                         setEditClassroomModal(true);
                                     }}
                                 >

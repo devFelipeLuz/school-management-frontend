@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
-import { getAuthHeaders } from "../utils/auth";
-import { activateUser, deactivateUser, getUsers } from "../services/userService";
-
-interface User {
-    id: string;
-    email: string;
-    createdAt: Date;
-    role: string;
-    enabled: boolean;
-}
+import {
+    activateUser,
+    createUser,
+    deactivateUser,
+    getUsers,
+    updateUser,
+    type User
+} from "../services/userService";
 
 export function useUsers() {
     const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [role, setRole] = useState("ADMIN");
+
     const [activeFilter, setActiveFilter] = useState("");
     const [emailFilter, setEmailFilter] = useState("");
-    const [role, setRole] = useState("");
     const [roleFilter, setRoleFilter] = useState("");
 
     const [debouncedEmail, setDebouncedEmail] = useState("");
 
     const [isFinished, setIsFinished] = useState(false);
     const [error, setError] = useState(false);
-
-    const BASE_URL = "http://localhost:8080/admin/users";
 
     const fetchUsers = async () => {
         try {
@@ -42,63 +41,58 @@ export function useUsers() {
         }
     };
 
+    const clearState = () => {
+        setEmail("");
+        setPassword("");
+        setRole("");
+    }
+
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
+        setError(false);
 
-        const createData = {
-            email: (document.getElementById("user-email") as HTMLInputElement).value,
-            password: (document.getElementById("user-password") as HTMLInputElement).value,
-            role: (document.getElementById("user-role") as HTMLInputElement).value,
-        };
 
         try {
-            const response = await fetch(BASE_URL, {
-                method: "POST",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(createData)
-            });
+            const response = await createUser(email, password, role);
 
             if (response.ok) {
                 fetchUsers();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
 
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     }
 
     const handleUpdate = async (event: React.FormEvent, id: string) => {
         event.preventDefault();
-
-        const updateData = {
-            email: (document.getElementById("user-email") as HTMLInputElement).value,
-            password: (document.getElementById("user-password") as HTMLInputElement).value,
-            role: (document.getElementById("user-role") as HTMLInputElement).value,
-        };
+        setError(false);
 
         try {
-            const response = await fetch(`${BASE_URL}/${id}`, {
-                method: "PATCH",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(updateData)
-            });
+            const response = await updateUser(email, password, role, id);
 
             if (response.ok) {
                 fetchUsers();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
 
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     }
 
@@ -146,6 +140,15 @@ export function useUsers() {
         users,
         setUsers,
 
+        email,
+        setEmail,
+
+        password,
+        setPassword,
+
+        role,
+        setRole,
+
         selectedUser,
         setSelectedUser,
 
@@ -154,9 +157,6 @@ export function useUsers() {
 
         emailFilter,
         setEmailFilter,
-
-        role,
-        setRole,
 
         roleFilter,
         setRoleFilter,
@@ -171,6 +171,7 @@ export function useUsers() {
         setError,
 
         fetchUsers,
+        clearState,
         handleCreate,
         handleUpdate,
         handleDeactivate,

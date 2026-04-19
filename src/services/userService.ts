@@ -14,7 +14,7 @@ interface UserFilters {
     enabled?: boolean;
 }
 
-const BASE_URL = "http://localhost:8080/admin/users";
+export const BASE_URL = "http://localhost:8080/admin/users";
 
 export async function getUsers(filters?: UserFilters) {
     const params = new URLSearchParams();
@@ -42,6 +42,26 @@ export async function getUsers(filters?: UserFilters) {
     const data = await response.json();
 
     return data.content;
+}
+
+export async function createUser(email: string, password: string, role: string) {
+    const createData = { email, password, role };
+
+    return await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(createData)
+    });
+}
+
+export async function updateUser(email: string, password: string, role: string, userId: string) {
+    const updateData = { email, password, role };
+
+    return await fetch(`${BASE_URL}/${userId}`, {
+        method: "PATCH",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(updateData)
+    });
 }
 
 export async function deactivateUser(id: string) {

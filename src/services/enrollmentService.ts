@@ -14,7 +14,7 @@ interface EnrollmentFilters {
     status?: string;
 }
 
-export const BASE_URL = "http://localhost:8080/enrollments"
+export const BASE_URL = "http://localhost:8080/enrollments";
 
 export async function getEnrollments(filters?: EnrollmentFilters) {
     const params = new URLSearchParams();
