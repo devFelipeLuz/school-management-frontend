@@ -1,54 +1,42 @@
-import { type Dispatch, type FormEvent, type SetStateAction } from "react";
+import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import StudentCardForm from "../CardForm/StudentForm";
+import AssignmentForm from "../CardForm/AssignmentForm";
 
-interface Student {
-    id: string,
-    name: string,
-    email: string
-}
-
-interface EditCardProps {
-    student: Student;
+interface CreationProps {
     closeModal: () => void;
-    handleUpdate: (event: FormEvent, id: string) => void;
+    handleCreate: (event: FormEvent) => void;
     isFinished: boolean;
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
-    name: string;
-    setName: Dispatch<SetStateAction<string>>;
-    email: string;
-    setEmail: Dispatch<SetStateAction<string>>;
-    password: string;
-    setPassword: Dispatch<SetStateAction<string>>;
-    placeholder?: string;
+    professorId?: string;
+    setProfessorId?: Dispatch<SetStateAction<string>>;
+    subjectId?: string;
+    setSubjectId?: Dispatch<SetStateAction<string>>;
+    classroomId?: string;
+    setClassroomId?: Dispatch<SetStateAction<string>>;
 }
 
-
-function StudentEditCard({
-    student,
+function AssignmentCreationCard({
     closeModal,
-    handleUpdate,
+    handleCreate,
     isFinished,
     setIsFinished,
     error,
     setError,
-    name,
-    setName,
-    email,
-    setEmail,
-    password,
-    setPassword }: EditCardProps) {
-
-    const onSave = (e: React.FormEvent) => handleUpdate(e, student.id);
+    professorId,
+    setProfessorId = () => { },
+    subjectId,
+    setSubjectId = () => { },
+    classroomId,
+    setClassroomId = () => { } }: CreationProps) {
 
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Updated successfully"
+                    text="Assignment created successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -72,22 +60,22 @@ function StudentEditCard({
                     cancel={closeModal}
                 />
             </Modal>
-        );
+        )
     }
 
     return (
-        <StudentCardForm
-            title="Editing..."
-            submit={onSave}
+        <AssignmentForm
+            submit={handleCreate}
             closeModal={closeModal}
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            placeholder="Leave it blank to keep current"
-        />)
+            title="Register a New Profssor"
+            professorId={professorId}
+            setProfessorId={setProfessorId}
+            subjectId={subjectId}
+            setSubjectId={setSubjectId}
+            classroomId={classroomId}
+            setClassroomId={setClassroomId}
+        />
+    )
 }
 
-export default StudentEditCard;
+export default AssignmentCreationCard;

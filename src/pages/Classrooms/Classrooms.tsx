@@ -15,6 +15,15 @@ function Classrooms() {
     const {
         classrooms,
 
+        name,
+        setName,
+
+        schoolYearId,
+        setSchoolYearId,
+
+        newCapacity,
+        setNewCapacity,
+
         selectedClassroom,
         setSelectedClassroom,
 
@@ -36,27 +45,31 @@ function Classrooms() {
         handleActivate
     } = useClassrooms();
 
-    const [classroomCreationModal, setClassroomCreationModal] = useState(false);
-    const [classroomEditModal, setClassroomEditModal] = useState(false);
-    const [deactivateClassroomModal, setDeactivateClassroomModal] = useState(false);
+    const [createClassroomModal, setCreateClassroomModal] = useState(false);
+    const [editClassroomModal, setEditClassroomModal] = useState(false);
     const [activateClassroomModal, setActivateClassroomModal] = useState(false);
+    const [deactivateClassroomModal, setDeactivateClassroomModal] = useState(false);
 
     return (
         <>
-            {classroomCreationModal &&
+            {createClassroomModal &&
                 <Modal>
                     <ClassroomCreationCard
-                        closeModal={() => setClassroomCreationModal(false)}
+                        closeModal={() => setCreateClassroomModal(false)}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        name={name}
+                        setName={setName}
+                        schoolYearId={schoolYearId}
+                        setSchoolYearId={setSchoolYearId}
                     />
                 </Modal>
             }
 
-            {classroomEditModal &&
+            {editClassroomModal &&
                 <Modal>
                     <ClassroomEditCard
                         classroom={selectedClassroom!}
@@ -64,13 +77,19 @@ function Classrooms() {
                             setSelectedClassroom(null);
                             setIsFinished(false);
                             setError(false);
-                            setClassroomEditModal(false);
+                            setEditClassroomModal(false);
                         }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        name={name}
+                        setName={setName}
+                        schoolYearId={schoolYearId}
+                        setSchoolYearId={setSchoolYearId}
+                        newCapacity={newCapacity}
+                        setNewCapacity={setNewCapacity}
                     />
                 </Modal>
             }
@@ -113,7 +132,7 @@ function Classrooms() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setClassroomCreationModal(true)}
+                        onClick={() => setCreateClassroomModal(true)}
                     >
                         + New Classroom
                     </NewEntityButton>
@@ -148,7 +167,7 @@ function Classrooms() {
                                 <EditButton
                                     onClick={() => {
                                         setSelectedClassroom(item);
-                                        setClassroomEditModal(true);
+                                        setEditClassroomModal(true);
                                     }}
                                 >
                                     edit

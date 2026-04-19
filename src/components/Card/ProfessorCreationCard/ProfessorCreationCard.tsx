@@ -16,7 +16,6 @@ interface CreationProps {
     setEmail?: Dispatch<SetStateAction<string>>;
     password?: string;
     setPassword?: Dispatch<SetStateAction<string>>;
-
 }
 
 function ProfessorCreationCard({

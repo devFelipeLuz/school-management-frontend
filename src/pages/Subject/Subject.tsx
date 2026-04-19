@@ -6,7 +6,7 @@ import { LargeInput } from "../../components/Input/styles";
 import SelectStatus from "../../components/SelectStatus/SelectStatus";
 import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from "../../components/Button/styles";
 import { SubjectHeader } from "../../components/TableHeader/styles";
-import { ActiveTag } from "../../components/Tag/styles";
+import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
 import Modal from "../../components/Modal/Modal";
 import SubjectCreationCard from "../../components/Card/SubjectCreationCard/SubjectCreationCard";
 import SubjectEditCard from "../../components/Card/SubjectEditCard/SubjectEditCard";
@@ -144,7 +144,7 @@ function Subject() {
                             <span>{item.name}</span>
                             {item.active ?
                                 <ActiveTag>active</ActiveTag> :
-                                <ActivateButton>inactive</ActivateButton>}
+                                <InactiveTag>inactive</InactiveTag>}
 
                             <ActionButtons>
                                 <EditButton

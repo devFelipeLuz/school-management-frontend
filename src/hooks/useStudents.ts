@@ -2,21 +2,19 @@ import { useEffect, useState } from "react";
 import {
     getStudents,
     deactivateStudent,
-    activateStudent
+    activateStudent,
+    type Students,
+    createStudent,
+    updateStudent
 } from "../services/studentService";
-import { getAuthHeaders } from "../utils/auth";
-
-export interface Students {
-    id: string;
-    name: string;
-    email: string;
-    classroom: string;
-    active: boolean;
-}
 
 export function useStudents() {
     const [students, setStudents] = useState<Students[]>([]);
     const [selectedStudent, setSelectedStudent] = useState<Students | null>(null);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const [activeFilter, setActiveFilter] = useState("");
     const [nameFilter, setNamefilter] = useState("");
@@ -27,8 +25,6 @@ export function useStudents() {
 
     const [isFinished, setIsFinished] = useState(false);
     const [error, setError] = useState(false);
-
-    const postEndpoint = "http://localhost:8080/students";
 
     const fetchStudents = async () => {
         try {
@@ -50,64 +46,55 @@ export function useStudents() {
         }
     };
 
+    const clearState = () => {
+        setName("");
+        setEmail("");
+        setPassword("");
+    }
+
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
-
-        const createData = {
-            name: (document.getElementById("student-name") as HTMLInputElement).value,
-            email: (document.getElementById("student-email") as HTMLInputElement).value,
-            password: (document.getElementById("student-password") as HTMLInputElement).value
-        };
+        setError(false);
 
         try {
-            const response = await fetch(postEndpoint, {
-                method: "POST",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(createData),
-
-            });
+            const response = await createStudent(name, email, password);
 
             if (response.ok) {
                 fetchStudents();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
-
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     }
 
     const handleUpdate = async (event: React.FormEvent, id: string) => {
         event.preventDefault();
-
-        const updateData = {
-            name: (document.getElementById("student-name") as HTMLInputElement).value,
-            email: (document.getElementById("student-email") as HTMLInputElement).value,
-            password: (document.getElementById("student-password") as HTMLInputElement).value
-        };
-
+        setError(false);
+        
         try {
-            const response = await fetch(`http://localhost:8080/students/${id}`, {
-                method: "PATCH",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(updateData),
-            });
+            const response = await updateStudent(name, email, password, id);
 
             if (response.ok) {
                 fetchStudents();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
-
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     };
 
@@ -158,6 +145,15 @@ export function useStudents() {
         selectedStudent,
         setSelectedStudent,
 
+        name,
+        setName,
+
+        email,
+        setEmail,
+
+        password,
+        setPassword,
+
         activeFilter,
         setActiveFilter,
 
@@ -180,6 +176,7 @@ export function useStudents() {
         setError,
 
         fetchStudents,
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,

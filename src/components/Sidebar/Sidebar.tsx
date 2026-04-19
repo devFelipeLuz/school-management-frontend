@@ -7,7 +7,8 @@ import {
   FaClipboardList,
   FaSignOutAlt,
   FaCalendarAlt,
-  FaUser
+  FaUser,
+  FaBookReader
 } from "react-icons/fa";
 
 import {
@@ -84,6 +85,11 @@ function Sidebar() {
           <SidebarItem onClick={() => navigate("/enrollments")}>
             <FaClipboardList />
             <span>Enrollments</span>
+          </SidebarItem>
+
+          <SidebarItem onClick={() => navigate("/assignments")}>
+            <FaBookReader />
+            <span>Assignments</span>
           </SidebarItem>
 
           <SidebarItem onClick={() => navigate("/assessments")}>

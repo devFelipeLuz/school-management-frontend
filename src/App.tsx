@@ -8,6 +8,8 @@ import Classrooms from './pages/Classrooms/Classrooms'
 import Enrollments from './pages/Enrollments/Enrollments'
 import Users from './pages/Users/Users'
 import Professors from './pages/Professors/Professors'
+import Subject from './pages/Subject/Subject'
+import Assignments from './pages/Assignments/Assignments'
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("accessToken");
@@ -24,7 +26,9 @@ function App() {
         <Route path='/students' element={<Students />} />
         <Route path='/professors' element={<Professors />} />
         <Route path='/classrooms' element={<Classrooms />} />
+        <Route path='/subjects' element={<Subject />} />
         <Route path='/enrollments' element={<Enrollments />} />
+        <Route path='/assignments' element={<Assignments />} />
         <Route path='/school-years' element={<SchoolYear />} />
         <Route path='/users' element={<Users />} />
       </Routes>

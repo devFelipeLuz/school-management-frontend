@@ -28,7 +28,7 @@ export async function getSubjects(filters?: SubjectFilter) {
         headers: getAuthHeaders()
     });
 
-    if (response.ok) {
+    if (!response.ok) {
         throw new Error("Error when searching for subject");
     }
 
@@ -70,7 +70,7 @@ export async function activateSubject(id: string) {
 
 export async function deactivateSubject(id: string) {
     const response = await fetch(`${BASE_URL}/${id}/deactivate`, {
-        method: "PATCH",
+        method: "DELETE",
         headers: getAuthHeaders()
     });
 

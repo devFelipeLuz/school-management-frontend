@@ -20,3 +20,7 @@ export const ProfessorHeader = styled(DefaultHeader)`
 export const SubjectHeader = styled(DefaultHeader)`
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
 `
+
+export const AssignmentHeader = styled(DefaultHeader)`
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+`

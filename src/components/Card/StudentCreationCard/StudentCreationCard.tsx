@@ -1,6 +1,6 @@
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
 import Modal from "../../Modal/Modal";
-import StudentCardForm from "../CardForm/StudentCardForm";
+import StudentForm from "../CardForm/StudentForm";
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 
 interface CreationProps {
@@ -10,6 +10,12 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    name: string;
+    setName: Dispatch<SetStateAction<string>>;
+    email: string;
+    setEmail: Dispatch<SetStateAction<string>>;
+    password: string;
+    setPassword: Dispatch<SetStateAction<string>>;
 }
 
 function StudentCreationCard({
@@ -18,7 +24,13 @@ function StudentCreationCard({
     isFinished,
     setIsFinished,
     error,
-    setError }: CreationProps) {
+    setError,
+    name,
+    setName,
+    email,
+    setEmail,
+    password,
+    setPassword }: CreationProps) {
 
     if (isFinished) {
         return (
@@ -52,10 +64,16 @@ function StudentCreationCard({
     }
 
     return (
-        <StudentCardForm
+        <StudentForm
             submit={handleCreate}
             closeModal={closeModal}
             title="Register a New Student"
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
         />)
 }
 

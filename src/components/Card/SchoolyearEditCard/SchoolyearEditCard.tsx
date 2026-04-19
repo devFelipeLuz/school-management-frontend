@@ -16,9 +16,20 @@ interface CardProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    year: string;
+    setYear: Dispatch<SetStateAction<string>>;
 }
 
-function SchooyearEditCard({ schoolyears, closeModal, handleUpdate, isFinished, setIsFinished, error, setError }: CardProps) {
+function SchooyearEditCard({ 
+    schoolyears, 
+    closeModal, 
+    handleUpdate, 
+    isFinished, 
+    setIsFinished, 
+    error, 
+    setError, 
+    year, 
+    setYear }: CardProps) {
 
     const onSave = (e: React.FormEvent) => handleUpdate(e, schoolyears.id);
 
@@ -42,12 +53,12 @@ function SchooyearEditCard({ schoolyears, closeModal, handleUpdate, isFinished, 
     if (error) {
         return (
             <Modal>
-                <ConfirmationCard 
-                text="An unexpected error occured"
-                cancelTextButton="close"
-                successTextButton="confirm"
-                confirm={() => setError(false)}
-                cancel={closeModal}
+                <ConfirmationCard
+                    text="An unexpected error occured"
+                    cancelTextButton="close"
+                    successTextButton="confirm"
+                    confirm={() => setError(false)}
+                    cancel={closeModal}
                 />
             </Modal>
         );
@@ -58,7 +69,8 @@ function SchooyearEditCard({ schoolyears, closeModal, handleUpdate, isFinished, 
             title="Editing..."
             submit={onSave}
             closeModal={closeModal}
-            year={schoolyears.year}
+            year={year}
+            setYear={setYear}
         />
     )
 }

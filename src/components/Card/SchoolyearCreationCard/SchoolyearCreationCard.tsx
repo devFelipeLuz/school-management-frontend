@@ -10,9 +10,19 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
+    year: string;
+    setYear: Dispatch<SetStateAction<string>>;
 }
 
-function SchoolyearCreationCard({ closeModal, handleCreate, isFinished, setIsFinished, error, setError }: CreationProps) {
+function SchoolyearCreationCard({
+    closeModal,
+    handleCreate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    year,
+    setYear }: CreationProps) {
 
     if (isFinished) {
         return (
@@ -50,6 +60,8 @@ function SchoolyearCreationCard({ closeModal, handleCreate, isFinished, setIsFin
             submit={handleCreate}
             closeModal={closeModal}
             title="Register a new School Year"
+            year={year}
+            setYear={setYear}
         />
     )
 }

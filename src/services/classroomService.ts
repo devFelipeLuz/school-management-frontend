@@ -14,6 +14,8 @@ interface ClassroomFilters {
     active?: boolean;
 }
 
+export const BASE_URL = "http://localhost:8080/classrooms";
+
 export async function getClassrooms(filters?: ClassroomFilters) {
     const params = new URLSearchParams();
 
@@ -25,11 +27,9 @@ export async function getClassrooms(filters?: ClassroomFilters) {
         params.append("active", String(filters.active));
     }
 
-    const response = await fetch(
-        `http://localhost:8080/classrooms?${params.toString()}`,
-        {
-            headers: getAuthHeaders()
-        });
+    const response = await fetch(`$BASE_URL{?${params.toString()}`, {
+        headers: getAuthHeaders()
+    });
 
     if (!response.ok) {
         throw new Error("Error when searching for classrooms");
@@ -40,8 +40,28 @@ export async function getClassrooms(filters?: ClassroomFilters) {
     return data.content;
 }
 
+export async function createClassroom(name: string, schoolYearId: string) {
+    const createData = { name, schoolYearId };
+
+    return await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(createData)
+    });
+}
+
+export async function updateClassroom(name: string, newCapacity: number, id: string) {
+    const updateData = { name, newCapacity }
+
+    return await fetch(`${BASE_URL}/${id}`, {
+        method: "PATCH",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(updateData)
+    });
+}
+
 export async function deactivateClassroom(id: string) {
-    const response = await fetch(`http://localhost:8080/classrooms/${id}/deactivate`, {
+    const response = await fetch(`${BASE_URL}${id}/deactivate`, {
         method: "DELETE",
         headers: getAuthHeaders()
     });
@@ -52,7 +72,7 @@ export async function deactivateClassroom(id: string) {
 }
 
 export async function activateClassroom(id: string) {
-    const response = await fetch(`http://localhost:8080/classrooms/${id}/activate`, {
+    const response = await fetch(`${BASE_URL}/${id}/activate`, {
         method: "PATCH",
         headers: getAuthHeaders()
     });

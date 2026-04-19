@@ -10,21 +10,36 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean,
     setError: Dispatch<SetStateAction<boolean>>;
+    name: string;
+    setName: Dispatch<SetStateAction<string>>;
+    schoolYearId: string;
+    setSchoolYearId: Dispatch<SetStateAction<string>>;
 }
 
-function ClassroomCreationCard({closeModal, handleCreate, isFinished, setIsFinished, error, setError}: CreationProps) {
+function ClassroomCreationCard({
+    closeModal,
+    handleCreate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    name,
+    setName,
+    schoolYearId,
+    setSchoolYearId }: CreationProps) {
+
     if (isFinished) {
         return (
             <Modal>
-                <ConfirmationCard 
-                text="Classroom created successfully"
-                cancelTextButton="close"
-                successTextButton="confirm"
-                confirm={() => {
-                    setIsFinished(true);
-                    closeModal();
-                }}
-                cancel={closeModal}
+                <ConfirmationCard
+                    text="Classroom created successfully"
+                    cancelTextButton="close"
+                    successTextButton="confirm"
+                    confirm={() => {
+                        setIsFinished(true);
+                        closeModal();
+                    }}
+                    cancel={closeModal}
                 />
             </Modal>
         );
@@ -33,22 +48,24 @@ function ClassroomCreationCard({closeModal, handleCreate, isFinished, setIsFinis
     if (error) {
         return (
             <Modal>
-                <ConfirmationCard 
-                text="An unexpected error occurred"
-                cancelTextButton="close"
-                successTextButton="confirm"
-                confirm={() => setError(false)}
-                cancel={closeModal}
+                <ConfirmationCard
+                    text="An unexpected error occurred"
+                    cancelTextButton="close"
+                    successTextButton="confirm"
+                    confirm={() => setError(false)}
+                    cancel={closeModal}
                 />
             </Modal>
         )
     }
 
     return (
-        <ClassroomCreateCardForm 
-        submit={handleCreate}
-        closeModal={closeModal}
-        title="Register a New Classroom"
+        <ClassroomCreateCardForm
+            submit={handleCreate}
+            closeModal={closeModal}
+            title="Register a New Classroom"
+            name={name}
+            setName={setName}
         />
     )
 }

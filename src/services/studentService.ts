@@ -31,9 +31,7 @@ export async function getStudents(filters?: StudentFilters) {
         params.append("active", String(filters.active));
     }
 
-    const response = await fetch(
-        `http://localhost:8080/students?${params.toString()}`, 
-    {
+    const response = await fetch(`${BASE_URL}?${params.toString()}`, {
         headers: getAuthHeaders()
     });
 
@@ -42,8 +40,28 @@ export async function getStudents(filters?: StudentFilters) {
     }
 
     const data = await response.json();
-    
+
     return data.content;
+}
+
+export async function createStudent(name: string, email: string, password: string) {
+    const createData = { name, email, password };
+
+    return await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(createData)
+    });
+}
+
+export async function updateStudent(name: string, email: string, password: string, studentId: string) {
+    const updateData = { name, email, password };
+
+    return await fetch(`${BASE_URL}/${studentId}`, {
+        method: "PATCH",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(updateData)
+    });
 }
 
 export async function deactivateStudent(id: string) {

@@ -24,6 +24,9 @@ function SchoolYear() {
         yearFilter,
         setYearFilter,
 
+        year,
+        setYear,
+
         isFinished,
         setIsFinished,
 
@@ -53,6 +56,8 @@ function SchoolYear() {
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        year={year}
+                        setYear={setYear}
                     />
                 </Modal>
             }
@@ -72,6 +77,8 @@ function SchoolYear() {
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        year={year}
+                        setYear={setYear}
                     />
                 </Modal>
             }
@@ -142,6 +149,7 @@ function SchoolYear() {
                             <ActionButtons>
                                 <EditButton onClick={() => {
                                     setSelectedSchoolyear(item);
+                                    setYear(String(item.year));
                                     setSchoolyearEditModal(true);
                                 }}
 

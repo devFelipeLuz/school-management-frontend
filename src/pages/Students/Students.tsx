@@ -1,4 +1,3 @@
-import * as S from "./styles";
 import Modal from "../../components/Modal/Modal";
 import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
 import StudentCreationCard from "../../components/Card/StudentCreationCard/StudentCreationCard";
@@ -10,6 +9,7 @@ import { useState } from "react";
 import SelectStatus from "../../components/SelectStatus/SelectStatus";
 import { ActiveTag, InactiveTag } from "../../components/Tag/styles";
 import PageSetup from "../../components/PageSetup/PageSetup";
+import { ActionButtons, Group, InputGroup, StudentList, StudentRow, TableHeader } from "./styles";
 
 function Students() {
     const {
@@ -17,6 +17,15 @@ function Students() {
 
         selectedStudent,
         setSelectedStudent,
+
+        name,
+        setName,
+
+        email,
+        setEmail,
+
+        password,
+        setPassword,
 
         activeFilter,
         setActiveFilter,
@@ -27,52 +36,76 @@ function Students() {
         emailFilter,
         setEmailFilter,
 
+        debouncedName,
+        setDebouncedName,
+
+        debouncedEmail,
+        setDebouncedEmail,
+
         isFinished,
         setIsFinished,
 
         error,
         setError,
 
+        fetchStudents,
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,
         handleDeactivate
     } = useStudents();
 
-    const [deactivateStudentModal, setDeactivateStudentModal] = useState(false);
+    const [createStudentModal, setCreateStudentModal] = useState(false);
+    const [editStudentModal, setEditStudentModal] = useState(false);
     const [activateStudentModal, setActivateStudentModal] = useState(false);
-    const [studentCreationModal, setStudentCreationModal] = useState(false);
-    const [studentEditModal, setStudentEditModal] = useState(false);
+    const [deactivateStudentModal, setDeactivateStudentModal] = useState(false);
 
     return (
         <>
-            {studentCreationModal &&
+            {createStudentModal &&
                 <Modal>
                     <StudentCreationCard
-                        closeModal={() => setStudentCreationModal(false)}
+                        closeModal={() => {
+                            setCreateStudentModal(false);
+                            clearState();
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        name={name}
+                        setName={setName}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
                     />
                 </Modal>}
 
-            {studentEditModal &&
+            {editStudentModal &&
                 <Modal>
                     <StudentEditCard
                         student={selectedStudent!}
                         closeModal={() => {
                             setSelectedStudent(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
-                            setStudentEditModal(false);
+                            setEditStudentModal(false);
                         }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        name={name}
+                        setName={setName}
+                        email={email}
+                        setEmail={setEmail}
+                        password={password}
+                        setPassword={setPassword}
                     />
                 </Modal>
             }
@@ -100,8 +133,8 @@ function Students() {
                 </Modal>}
 
             <PageSetup>
-                <S.Group>
-                    <S.InputGroup>
+                <Group>
+                    <InputGroup>
                         <LargeInput
                             type="text"
                             placeholder="Filter by name"
@@ -115,25 +148,25 @@ function Students() {
                             onChange={(e) => setEmailFilter(e.target.value)}
                         />
                         <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                    </S.InputGroup>
+                    </InputGroup>
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setStudentCreationModal(true)}>
+                        onClick={() => setCreateStudentModal(true)}>
                         + New Student
                     </NewEntityButton>
-                </S.Group>
-                <S.TableHeader>
+                </Group>
+                <TableHeader>
                     <span>ID</span>
                     <span>Name</span>
                     <span>Email</span>
                     <span>Classroom</span>
                     <span>Status</span>
                     <span>Actions</span>
-                </S.TableHeader>
-                <S.StudentList>
+                </TableHeader>
+                <StudentList>
                     {students.map((item) => (
-                        <S.StudentRow key={item.id}>
+                        <StudentRow key={item.id}>
                             <span>{item.id}</span>
                             <span>{item.name}</span>
                             <span>{item.email}</span>
@@ -145,11 +178,14 @@ function Students() {
                                 <InactiveTag>inactive</InactiveTag>
                             )}
 
-                            <S.ActionButtons>
+                            <ActionButtons>
                                 <EditButton
                                     onClick={() => {
                                         setSelectedStudent(item);
-                                        setStudentEditModal(true);
+                                        setName(item.name);
+                                        setEmail(item.email);
+                                        setPassword("");
+                                        setEditStudentModal(true);
                                     }}
                                 >
                                     edit
@@ -174,10 +210,10 @@ function Students() {
                                         activate
                                     </ActivateButton>
                                 )}
-                            </S.ActionButtons>
-                        </S.StudentRow>
+                            </ActionButtons>
+                        </StudentRow>
                     ))}
-                </S.StudentList>
+                </StudentList>
             </PageSetup>
         </>
     );

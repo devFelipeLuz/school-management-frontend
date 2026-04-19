@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
-import { activateClassroom, deactivateClassroom, getClassrooms } from "../services/classroomService";
-import { getAuthHeaders } from "../utils/auth";
-
-export interface Classroom {
-    id: string;
-    name: string;
-    enrollmentCountForSchoolYear: number;
-    maxCapacity: number;
-    schoolYear: number;
-    active: boolean;
-}
+import { activateClassroom, createClassroom, deactivateClassroom, getClassrooms, updateClassroom, type Classroom } from "../services/classroomService";
 
 export function useClassrooms() {
     const [classrooms, setClassrooms] = useState<Classroom[]>([]);
     const [selectedClassroom, setSelectedClassroom] = useState<Classroom | null>(null);
+
+    const [name, setName] = useState("");
+    const [schoolYearId, setSchoolYearId] = useState("");
+    const [newCapacity, setNewCapacity] = useState(Number);
 
     const [activeFilter, setActiveFilter] = useState("");
     const [nameFilter, setNameFilter] = useState("");
@@ -43,62 +37,49 @@ export function useClassrooms() {
 
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
-
-        const createData = {
-            name: (document.getElementById("classroom-name") as HTMLInputElement).value,
-            schoolYearId: (document.getElementById("schoolyear-id") as HTMLInputElement).value
-        };
+        setError(false);
 
         try {
-            const response = await fetch(
-                `http://localhost:8080/classrooms`, {
-                method: "POST",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(createData),
-            });
+            const response = await createClassroom(name, schoolYearId);
 
             if (response.ok) {
                 fetchClassrooms();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
 
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
-    }
+    };
 
     const handleUpdate = async (event: React.FormEvent, id: string) => {
         event.preventDefault();
-
-        const updateData = {
-            name: (document.getElementById("classroom-name") as HTMLInputElement).value,
-            newCapacity: (document.getElementById("classroom-new-capacity") as HTMLInputElement).value
-        };
+        setError(false);
 
         try {
-            const response = await fetch(
-                `http://localhost:8080/classrooms/${id}`, {
-
-                method: "PATCH",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(updateData),
-            });
+            const response = await updateClassroom(name, newCapacity, id)
 
             if (response.ok) {
                 fetchClassrooms();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
 
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     };
 
@@ -144,6 +125,15 @@ export function useClassrooms() {
 
     return {
         classrooms,
+
+        name,
+        setName,
+
+        schoolYearId,
+        setSchoolYearId,
+
+        newCapacity,
+        setNewCapacity,
 
         selectedClassroom,
         setSelectedClassroom,

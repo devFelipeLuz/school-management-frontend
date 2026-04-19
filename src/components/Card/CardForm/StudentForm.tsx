@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import { CancelButton, SuccessButton } from "../../Button/styles";
 import Input from "../../Input/Input";
 import * as S from "./styles";
@@ -7,11 +8,26 @@ interface StudentCardFormProps {
     closeModal: () => void;
     title?: string;
     name?: string;
+    setName?: Dispatch<SetStateAction<string>>;
     email?: string;
+    setEmail?: Dispatch<SetStateAction<string>>;
+    password?: string;
+    setPassword?: Dispatch<SetStateAction<string>>;
     placeholder?: string;
 }
 
-function StudentCardForm({ submit, closeModal, title, name, email, placeholder }: StudentCardFormProps) {
+function StudentForm({
+    submit,
+    closeModal,
+    title,
+    name,
+    setName = () => { },
+    email,
+    setEmail = () => { },
+    password,
+    setPassword = () => { },
+    placeholder }: StudentCardFormProps) {
+
     return (
         <S.Section>
             <S.Form onSubmit={submit}>
@@ -22,7 +38,8 @@ function StudentCardForm({ submit, closeModal, title, name, email, placeholder }
                         type="text"
                         name="student-name"
                         id="student-name"
-                        defaultValue={name}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </S.InputGroup>
 
@@ -32,7 +49,8 @@ function StudentCardForm({ submit, closeModal, title, name, email, placeholder }
                         type="text"
                         name="student-email"
                         id="student-email"
-                        defaultValue={email}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </S.InputGroup>
 
@@ -43,6 +61,8 @@ function StudentCardForm({ submit, closeModal, title, name, email, placeholder }
                         name="student-password"
                         id="student-password"
                         placeholder={placeholder}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </S.InputGroup>
                 <S.ButtonGroup>
@@ -54,4 +74,4 @@ function StudentCardForm({ submit, closeModal, title, name, email, placeholder }
     )
 }
 
-export default StudentCardForm;
+export default StudentForm;
