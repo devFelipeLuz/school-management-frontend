@@ -27,6 +27,9 @@ function Classrooms() {
         selectedClassroom,
         setSelectedClassroom,
 
+        selectedSchoolYear,
+        setSelectedSchoolYear,
+
         activeFilter,
         setActiveFilter,
 
@@ -69,6 +72,8 @@ function Classrooms() {
                         setName={setName}
                         schoolYearId={schoolYearId}
                         setSchoolYearId={setSchoolYearId}
+                        selectedSchoolYear={selectedSchoolYear}
+                        setSelectedSchoolYear={setSelectedSchoolYear}
                     />
                 </Modal>
             }
@@ -137,7 +142,12 @@ function Classrooms() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateClassroomModal(true)}
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateClassroomModal(true);
+                        }}
                     >
                         + New Classroom
                     </NewEntityButton>

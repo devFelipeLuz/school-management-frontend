@@ -26,7 +26,7 @@ export async function getSchoolyears(filter?: SchoolyearFilter) {
     }
 
     const response = await fetch(
-        `http://localhost:8080/school-years?${params.toString()}`,
+        `${BASE_URL}?${params.toString()}`,
         {
             headers: getAuthHeaders()
         });
@@ -40,8 +40,15 @@ export async function getSchoolyears(filter?: SchoolyearFilter) {
     return data.content;
 }
 
-export async function createSchoolyear(year: string) {
+export async function searchSchoolYears(query: string) {
+    const response = await fetch(`${BASE_URL}?year=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    return data.content;
+}
 
+export async function createSchoolyear(year: string) {
     const createData = { year };
 
     return await fetch(`${BASE_URL}`, {
@@ -52,7 +59,6 @@ export async function createSchoolyear(year: string) {
 }
 
 export async function updateSchoolyear(year: string, schoolyearId: string) {
-
     const updateData = { year };
 
     return await fetch(`${BASE_URL}/${schoolyearId}`, {
@@ -63,8 +69,7 @@ export async function updateSchoolyear(year: string, schoolyearId: string) {
 }
 
 export async function deactivateSchoolyear(id: string) {
-    const response = await fetch(
-        `http://localhost:8080/school-years/${id}/deactivate`, {
+    const response = await fetch(`${BASE_URL}/${id}/deactivate`, {
         method: "DELETE",
         headers: getAuthHeaders()
     });
@@ -75,8 +80,7 @@ export async function deactivateSchoolyear(id: string) {
 }
 
 export async function activateSchoolyear(id: string) {
-    const response = await fetch(
-        `http://localhost:8080/school-years/${id}/activate`, {
+    const response = await fetch(`${BASE_URL}/${id}/activate`, {
         method: "PATCH",
         headers: getAuthHeaders()
     });

@@ -1,17 +1,24 @@
 import { CancelButton, SuccessButton } from "../../Button/styles";
 import Input from "../../Input/Input";
-import { ButtonGroup, Form, InputGroup, Label, Section, Title } from "./styles";
+import { ButtonGroup, CreateClassroomSection, Form, InputGroup, Label, Title } from "./styles";
 import Autocomplete from "../../Autocomplete/Autocomplete";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
+import { searchSchoolYears, type Schoolyears } from "../../../services/schoolyearService";
 
 interface ClassroomCardFromProps {
     submit: (e: React.FormEvent) => void;
     closeModal: () => void;
+
     title?: string;
+
     name?: string;
     setName?: Dispatch<SetStateAction<string>>;
+
     schoolyearId?: string;
     setSchoolyearId?: Dispatch<SetStateAction<string>>;
+
+    selectedSchoolYear: Schoolyears | null;
+    setSelectedSchoolYear: Dispatch<SetStateAction<Schoolyears | null>>;
 }
 
 function ClassroomCreateCardForm({
@@ -20,13 +27,12 @@ function ClassroomCreateCardForm({
     title,
     name,
     setName = () => { },
-    schoolyearId,
-    setSchoolyearId }: ClassroomCardFromProps) {
-
-    const [selectedYear, setSelectedYear] = useState<any>(null);
+    setSchoolyearId = () => { },
+    selectedSchoolYear,
+    setSelectedSchoolYear = () => { } }: ClassroomCardFromProps) {
 
     return (
-        <Section>
+        <CreateClassroomSection>
             <Form onSubmit={submit}>
                 <Title>{title}</Title>
                 <InputGroup>
@@ -42,13 +48,12 @@ function ClassroomCreateCardForm({
 
                 <InputGroup>
                     <Autocomplete
-                        value={selectedYear}
+                        value={selectedSchoolYear}
                         onChange={(item) => {
-                            setSelectedYear(item);
-                            setSchoolyearId?.(item?.id ?? null);
+                            setSelectedSchoolYear(item);
+                            setSchoolyearId?.(item?.id ?? "");
                         }}
-                        url="http://localhost:8080/school-years"
-                        queryParamName="year"
+                        fetchFn={searchSchoolYears}
                         getLabel={(item) => String(item.year)}
                         placeholder="Search year..."
                     />
@@ -62,7 +67,7 @@ function ClassroomCreateCardForm({
                 </ButtonGroup>
 
             </Form>
-        </Section>
+        </CreateClassroomSection>
     )
 }
 

@@ -7,7 +7,8 @@ export function useClassrooms() {
 
     const [name, setName] = useState("");
     const [schoolYearId, setSchoolYearId] = useState("");
-    const [capacity, setCapacity] = useState(Number);
+    const [capacity, setCapacity] = useState<number>(0);
+    const [selectedSchoolYear, setSelectedSchoolYear] = useState<any>(null);
 
     const [activeFilter, setActiveFilter] = useState("");
     const [nameFilter, setNameFilter] = useState("");
@@ -38,6 +39,7 @@ export function useClassrooms() {
     const clearState = () => {
         setName("");
         setSchoolYearId("");
+        setSelectedSchoolYear(null);
         setCapacity(0);
     }
 
@@ -143,6 +145,9 @@ export function useClassrooms() {
 
         selectedClassroom,
         setSelectedClassroom,
+
+        selectedSchoolYear,
+        setSelectedSchoolYear,
 
         activeFilter,
         setActiveFilter,

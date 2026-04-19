@@ -2,18 +2,26 @@ import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
 import ClassroomCreateCardForm from "../CardForm/ClassroomCreateCardForm";
+import type { Schoolyears } from "../../../services/schoolyearService";
 
 interface CreationProps {
     closeModal: () => void;
     handleCreate: (e: FormEvent) => void;
+
     isFinished: boolean,
     setIsFinished: Dispatch<SetStateAction<boolean>>;
+
     error: boolean,
     setError: Dispatch<SetStateAction<boolean>>;
+
     name: string;
     setName: Dispatch<SetStateAction<string>>;
+
     schoolYearId: string;
     setSchoolYearId: Dispatch<SetStateAction<string>>;
+
+    selectedSchoolYear: Schoolyears | null;
+    setSelectedSchoolYear: Dispatch<SetStateAction<Schoolyears | null>>;
 }
 
 function ClassroomCreationCard({
@@ -26,7 +34,9 @@ function ClassroomCreationCard({
     name,
     setName,
     schoolYearId,
-    setSchoolYearId }: CreationProps) {
+    setSchoolYearId,
+    selectedSchoolYear,
+    setSelectedSchoolYear }: CreationProps) {
 
     if (isFinished) {
         return (
@@ -66,6 +76,10 @@ function ClassroomCreationCard({
             title="Register a New Classroom"
             name={name}
             setName={setName}
+            schoolyearId={schoolYearId}
+            setSchoolyearId={setSchoolYearId}
+            selectedSchoolYear={selectedSchoolYear}
+            setSelectedSchoolYear={setSelectedSchoolYear}
         />
     )
 }

@@ -20,6 +20,10 @@ export const Section = styled.section`
     flex-direction: column;
 `
 
+export const CreateClassroomSection = styled(Section)`
+    height: 560px;
+`
+
 export const Form = styled.form`
     width: 100%;
     height: 100%;

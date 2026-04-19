@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
+import { useAutocomplete } from "../../hooks/useAutocomplete";
+import type { AutocompleteProps, BaseEntity } from "../../services/autocompleteService";
+import { InputGroup, Label } from "../Card/CardForm/styles";
+import { DropDown, DropDownItem } from "./styles";
+import Input from "../Input/Input";
 
-interface Props<T> {
-    value: T | null;
-    onChange: (item: T | null) => void;
-
-    placeholder?: string;
-    url: string;
-    queryParamName: string;
-    getLabel: (item: T) => string;
-}
-
-function Autocomplete<T extends { id: string | number }>({
+function Autocomplete<T extends BaseEntity>({
     value,
     onChange,
-    placeholder = "Search...",
-    url,
-    queryParamName,
-    getLabel
-}: Props<T>) {
+    fetchFn,
+    getLabel,
+    placeholder = "Search..."
+}: AutocompleteProps<T>) {
 
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState<T[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const {
+        query,
+        setQuery,
+        results,
+        loading
+    } = useAutocomplete(fetchFn);
 
     useEffect(() => {
         if (value) {
@@ -30,64 +30,37 @@ function Autocomplete<T extends { id: string | number }>({
         }
     }, [value]);
 
-    useEffect(() => {
-        const controller = new AbortController();
-
-        const timer = setTimeout(async () => {
-            if (!query.trim()) {
-                setResults([]);
-                return;
-            }
-
-            try {
-                const response = await fetch(
-                    `${url}?${queryParamName}=${query}`,
-                    { signal: controller.signal }
-                );
-
-                const data = await response.json();
-                setResults(data.content || data);
-
-            } catch (err: any) {
-                if (err.name !== "AbortError") {
-                    console.error(err);
-                }
-            }
-        }, 300);
-
-        return () => {
-            clearTimeout(timer);
-            controller.abort();
-        };
-
-    }, [query, url, queryParamName]);
-
     return (
         <div>
-            <input
-                type="text"
-                placeholder={placeholder}
-                value={query}
-                onChange={(e) => {
-                    setQuery(e.target.value);
-                    onChange(null); // limpou seleção
-                }}
-            />
+            <InputGroup>
+                <Label>Schoolyear</Label>
+                <Input
+                    value={query}
+                    placeholder={placeholder}
+                    onChange={(e) => {
+                        setQuery(e.target.value);
+                        setIsOpen(true);
+                        onChange(null);
+                    }}
+                />
+            </InputGroup>
+            {loading && <div>Loading...</div>}
 
-            {results.length > 0 && (
-                <div>
+            {isOpen && results.length > 0 && (
+                <DropDown>
                     {results.map((item) => (
-                        <div
+                        <DropDownItem
                             key={item.id}
-                            onClick={() => {
+                            onMouseDown={() => {
                                 onChange(item);
-                                setResults([]);
+                                setQuery(getLabel(item));
+                                setIsOpen(false);
                             }}
                         >
                             {getLabel(item)}
-                        </div>
+                        </DropDownItem>
                     ))}
-                </div>
+                </DropDown>
             )}
         </div>
     );
