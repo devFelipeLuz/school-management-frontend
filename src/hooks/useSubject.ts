@@ -29,6 +29,10 @@ export function useSubjects() {
         }
     };
 
+    const clearState = () => {
+        setName("");
+    }
+
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
         setError(false);
@@ -139,6 +143,7 @@ export function useSubjects() {
         setError,
 
         fetchSubjects,
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,

@@ -39,6 +39,10 @@ export function useSchoolyear() {
         }
     };
 
+    const clearState = () => {
+        setYear("");
+    }
+
     const handleCreate = async (event: FormEvent) => {
         event.preventDefault();
         setError(false);
@@ -152,6 +156,7 @@ export function useSchoolyear() {
         setError,
 
         fetchSchoolyears,
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,

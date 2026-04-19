@@ -43,6 +43,7 @@ function Professors() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,
@@ -59,7 +60,10 @@ function Professors() {
             {createProfessorModal &&
                 <Modal>
                     <ProfessorCreationCard
-                        closeModal={() => setCreateProfessorModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateProfessorModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
@@ -81,6 +85,7 @@ function Professors() {
                         professor={selectedProfessor!}
                         closeModal={() => {
                             setSelectedProfessor(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
                             setEditProfessorModal(false);

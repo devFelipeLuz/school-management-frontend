@@ -33,24 +33,28 @@ function SchoolYear() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,
         handleDeactivate
     } = useSchoolyear();
 
-    const [schoolyearCreationModal, setSchoolYearCreationModal] = useState(false);
-    const [schoolyearEditModal, setSchoolyearEditModal] = useState(false);
+    const [createSchoolyearModal, setCreateSchoolyearModal] = useState(false);
+    const [editSchoolyearModal, setEditSchoolyearModal] = useState(false);
     const [activateSchoolYearModal, setActivateSchoolyearModal] = useState(false);
     const [deactivateSchoolyearModal, setDeactivateSchoolyearModal] = useState(false);
 
 
     return (
         <>
-            {schoolyearCreationModal &&
+            {createSchoolyearModal &&
                 <Modal>
                     <SchoolyearCreationCard
-                        closeModal={() => setSchoolYearCreationModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateSchoolyearModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
@@ -62,15 +66,16 @@ function SchoolYear() {
                 </Modal>
             }
 
-            {schoolyearEditModal &&
+            {editSchoolyearModal &&
                 <Modal>
                     <SchoolyearEditCard
                         schoolyears={selectedSchoolyear!}
                         closeModal={() => {
                             setSelectedSchoolyear(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
-                            setSchoolyearEditModal(false);
+                            setEditSchoolyearModal(false);
                         }}
                         handleUpdate={handleUpdate}
                         isFinished={isFinished}
@@ -120,7 +125,7 @@ function SchoolYear() {
                     </InputGroup>
                     <NewEntityButton
                         type="button"
-                        onClick={() => setSchoolYearCreationModal(true)}
+                        onClick={() => setCreateSchoolyearModal(true)}
                     >
                         + New School Year
                     </NewEntityButton>
@@ -150,7 +155,7 @@ function SchoolYear() {
                                 <EditButton onClick={() => {
                                     setSelectedSchoolyear(item);
                                     setYear(String(item.year));
-                                    setSchoolyearEditModal(true);
+                                    setEditSchoolyearModal(true);
                                 }}
 
                                 >

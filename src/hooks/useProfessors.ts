@@ -34,6 +34,12 @@ export function useProfessors() {
         }
     };
 
+    const clearState = () => {
+        setName("");
+        setEmail("");
+        setPassword("");
+    }
+
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
         setError(false);
@@ -78,7 +84,7 @@ export function useProfessors() {
             console.error("Network error:", error);
             setError(true);
         }
-    }
+    };
 
     const handleActivate = async () => {
         if (!selectedProfessor) return;
@@ -104,7 +110,7 @@ export function useProfessors() {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     useEffect(() => {
         fetchProfessors();
@@ -157,6 +163,7 @@ export function useProfessors() {
         setError,
 
         fetchProfessors,
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,

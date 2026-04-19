@@ -34,6 +34,7 @@ function Subject() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleUpdate,
         handleActivate,
@@ -50,7 +51,10 @@ function Subject() {
             {createSubjectModal &&
                 <Modal>
                     <SubjectCreationCard
-                        closeModal={() => setCreateSubjectModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateSubjectModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
@@ -68,6 +72,7 @@ function Subject() {
                         subject={selectedSubject!}
                         closeModal={() => {
                             setSelectedSubject(null);
+                            clearState();
                             setIsFinished(false);
                             setError(false);
                             setEditSubjectModal(false);
