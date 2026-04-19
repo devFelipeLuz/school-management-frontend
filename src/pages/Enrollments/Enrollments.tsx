@@ -16,6 +16,12 @@ function Enrollments() {
 
         setSelectedEnrollment,
 
+        studentId,
+        setStudentId,
+
+        classroomId,
+        setClassroomId,
+
         activeFilter,
         setActiveFilter,
 
@@ -28,13 +34,14 @@ function Enrollments() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleCancel,
         handleFinish,
         handleActivate
     } = useEnrollments();
 
-    const [enrollmentCreationModal, setEnrollmentCreationModal] = useState(false);
+    const [createEnrollmentModal, setCreateEnrollmentModal] = useState(false);
     const [activateEnrollmentModal, setActivateEnrollmentModal] = useState(false);
     const [cancelEnrollmentModal, setCancelEnrollmentModal] = useState(false);
     const [finishEnrollmentModal, setFinishEnrollmentModal] = useState(false);
@@ -42,15 +49,22 @@ function Enrollments() {
 
     return (
         <>
-            {enrollmentCreationModal &&
+            {createEnrollmentModal &&
                 <Modal>
                     <EnrollmentCreationCard
-                        closeModal={() => setEnrollmentCreationModal(false)}
+                        closeModal={() => {
+                            clearState();
+                            setCreateEnrollmentModal(false);
+                        }}
                         handleCreate={handleCreate}
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
                         error={error}
                         setError={setError}
+                        studentId={studentId}
+                        setStudentId={setStudentId}
+                        classroomId={classroomId}
+                        setClassroomId={setClassroomId}
                     />
                 </Modal>
             }
@@ -108,7 +122,7 @@ function Enrollments() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setEnrollmentCreationModal(true)}
+                        onClick={() => setCreateEnrollmentModal(true)}
                     >
                         + New Enrollment
                     </NewEntityButton>
@@ -180,7 +194,7 @@ function Enrollments() {
                                         </ActivateButton>
                                 }[item.status])}
                             </ActionButtons>
-                            
+
                         </EnrollmentRow>
                     ))}
                 </EnrollmentList>

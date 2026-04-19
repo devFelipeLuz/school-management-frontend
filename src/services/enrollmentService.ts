@@ -14,7 +14,7 @@ interface EnrollmentFilters {
     status?: string;
 }
 
-const BASE_URL = "http://localhost:8080/enrollments"
+export const BASE_URL = "http://localhost:8080/enrollments"
 
 export async function getEnrollments(filters?: EnrollmentFilters) {
     const params = new URLSearchParams();
@@ -38,6 +38,16 @@ export async function getEnrollments(filters?: EnrollmentFilters) {
     const data = await response.json();
 
     return data.content;
+}
+
+export async function createEnrollment(studentId: string, classroomId: string) {
+    const createData = { studentId, classroomId };
+
+    return await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(createData)
+    });
 }
 
 export async function finishEnrollment(id: string) {

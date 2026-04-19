@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { getAuthHeaders } from "../utils/auth";
-import { activateEnrollment, cancelEnrollment, finishEnrollment, getEnrollments } from "../services/enrollmentService";
-
-export interface Enrollments {
-    id: string;
-    studentName: string;
-    schoolYear: number;
-    classroomName: string;
-    enrolledAt: Date;
-    status: string;
-}
+import {
+    activateEnrollment,
+    cancelEnrollment,
+    createEnrollment,
+    finishEnrollment,
+    getEnrollments,
+    type Enrollments
+} from "../services/enrollmentService";
 
 export function useEnrollments() {
     const [enrollments, setEnrollments] = useState<Enrollments[]>([]);
     const [selectedEnrollment, setSelectedEnrollment] = useState<Enrollments | null>(null);
+
+    const [studentId, setStudentId] = useState("");
+    const [classroomId, setClassroomId] = useState("");
 
     const [nameFilter, setNamefilter] = useState("");
     const [activeFilter, setActiveFilter] = useState("");
@@ -38,31 +38,31 @@ export function useEnrollments() {
         }
     };
 
+    const clearState = () => {
+        setStudentId("");
+        setClassroomId("");
+    }
+
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
-
-        const createData = {
-            studentId: (document.getElementById("student-id") as HTMLInputElement).value,
-            classroomId: (document.getElementById("classroom-id") as HTMLInputElement).value
-        };
+        setError(false);
 
         try {
-            const response = await fetch(`http://localhost:8080/enrollments`, {
-                method: "POST",
-                headers: getAuthHeaders(),
-                body: JSON.stringify(createData)
-            });
+            const response = await createEnrollment(studentId, classroomId);
 
             if (response.ok) {
                 fetchEnrollments();
                 setIsFinished(true);
 
             } else {
+                const errorData = await response.json();
+                console.error("Backend error: ", errorData.messsage);
                 setError(true);
             }
 
         } catch (error) {
             console.error("Network error:", error);
+            setError(true);
         }
     };
 
@@ -125,6 +125,12 @@ export function useEnrollments() {
         selectedEnrollment,
         setSelectedEnrollment,
 
+        studentId,
+        setStudentId,
+
+        classroomId,
+        setClassroomId,
+
         activeFilter,
         setActiveFilter,
 
@@ -140,9 +146,11 @@ export function useEnrollments() {
         error,
         setError,
 
+        fetchEnrollments,
+        clearState,
         handleCreate,
         handleCancel,
         handleFinish,
         handleActivate
-    }
+    };
 }

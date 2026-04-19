@@ -1,7 +1,7 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 import Modal from "../../Modal/Modal";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
-import EnrollmentCardForm from "../CardForm/EnrollmentCardForm";
+import EnrollmentForm from "../CardForm/EnrollmentForm";
 
 interface CreationProps {
     closeModal: () => void;
@@ -10,9 +10,23 @@ interface CreationProps {
     setIsFinished: Dispatch<SetStateAction<boolean>>;
     error: boolean,
     setError: Dispatch<SetStateAction<boolean>>;
+    studentId: string;
+    setStudentId: Dispatch<SetStateAction<string>>;
+    classroomId: string;
+    setClassroomId: Dispatch<SetStateAction<string>>;
 }
 
-function EnrollmentCreationCard({ closeModal, handleCreate, isFinished, setIsFinished, error, setError }: CreationProps) {
+function EnrollmentCreationCard({
+    closeModal,
+    handleCreate,
+    isFinished,
+    setIsFinished,
+    error,
+    setError,
+    studentId,
+    setStudentId,
+    classroomId,
+    setClassroomId }: CreationProps) {
 
     if (isFinished) {
         return (
@@ -46,10 +60,14 @@ function EnrollmentCreationCard({ closeModal, handleCreate, isFinished, setIsFin
     }
 
     return (
-        <EnrollmentCardForm
+        <EnrollmentForm
             submit={handleCreate}
             closeModal={closeModal}
             title="Register a New Classroom"
+            studentId={studentId}
+            setStudentId={setStudentId}
+            classroomId={classroomId}
+            setClassroomId={setClassroomId}
         />
     )
 

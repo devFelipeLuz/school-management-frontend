@@ -36,19 +36,12 @@ function Students() {
         emailFilter,
         setEmailFilter,
 
-        debouncedName,
-        setDebouncedName,
-
-        debouncedEmail,
-        setDebouncedEmail,
-
         isFinished,
         setIsFinished,
 
         error,
         setError,
 
-        fetchStudents,
         clearState,
         handleCreate,
         handleUpdate,

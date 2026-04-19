@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import { CancelButton, SuccessButton } from "../../Button/styles";
 import Input from "../../Input/Input";
 import { ButtonGroup, Form, InputGroup, Label, Section, Title } from "./styles";
@@ -6,12 +7,21 @@ interface EnrollmentCardFormProps {
     submit: (event: React.FormEvent) => void;
     closeModal: () => void;
     title?: string;
-    studentId?: string;
-    schoolyearId?: string;
-    classroomId?: string;
+    studentId: string;
+    setStudentId: Dispatch<SetStateAction<string>>;
+    classroomId: string;
+    setClassroomId: Dispatch<SetStateAction<string>>;
 }
 
-function EnrollmentCardForm({ submit, closeModal, title, studentId, classroomId }: EnrollmentCardFormProps) {
+function EnrollmentForm({
+    submit,
+    closeModal,
+    title,
+    studentId,
+    setStudentId = () => { },
+    classroomId,
+    setClassroomId = () => { } }: EnrollmentCardFormProps) {
+
     return (
 
         <Section>
@@ -23,7 +33,8 @@ function EnrollmentCardForm({ submit, closeModal, title, studentId, classroomId 
                         type="text"
                         name="student-id"
                         id="student-id"
-                        defaultValue={studentId}
+                        value={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
                     />
                 </InputGroup>
 
@@ -33,7 +44,8 @@ function EnrollmentCardForm({ submit, closeModal, title, studentId, classroomId 
                         type="text"
                         name="classroom-id"
                         id="classroom-id"
-                        defaultValue={classroomId}
+                        value={classroomId}
+                        onChange={(e) => setClassroomId(e.target.value)}
                     />
                 </InputGroup>
 
@@ -46,4 +58,4 @@ function EnrollmentCardForm({ submit, closeModal, title, studentId, classroomId 
     )
 }
 
-export default EnrollmentCardForm;
+export default EnrollmentForm;
