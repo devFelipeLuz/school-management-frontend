@@ -125,8 +125,12 @@ function SchoolYear() {
                     </InputGroup>
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateSchoolyearModal(true)}
-                    >
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateSchoolyearModal(true);
+                        }}>
                         + New School Year
                     </NewEntityButton>
                 </Group>
@@ -142,7 +146,7 @@ function SchoolYear() {
                 <SchoolyearList>
                     {schoolyears.map((item) => (
                         <SchoolyearRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0,8)}...</span>
                             <span>{item.year}</span>
                             <span>{new Date(item.startDate).toLocaleDateString('pt-BR')}</span>
                             {item.active ? (

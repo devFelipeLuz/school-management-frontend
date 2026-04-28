@@ -47,6 +47,7 @@ function ClassroomCreateCardForm({
                 </InputGroup>
 
                 <InputGroup>
+                    <Label>Schoolyear</Label>
                     <Autocomplete
                         value={selectedSchoolYear}
                         onChange={(item) => {

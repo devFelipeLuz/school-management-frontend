@@ -43,6 +43,14 @@ export async function getProfessors(filters?: ProfessorFilter) {
     return data.content;
 }
 
+export async function searchProfessor(query: string) {
+    const respose = await fetch(`${BASE_URL}/search?name=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await respose.json();
+    return data.content;
+}
+
 export async function createProfessor(name: string, email: string, password: string) {
     const createData = { name, email, password };
 

@@ -19,8 +19,14 @@ function Enrollments() {
         studentId,
         setStudentId,
 
+        selectedStudent,
+        setSelectedStudent,
+
         classroomId,
         setClassroomId,
+
+        selectedClassroom,
+        setSelectedClassroom,
 
         activeFilter,
         setActiveFilter,
@@ -57,14 +63,24 @@ function Enrollments() {
                             setCreateEnrollmentModal(false);
                         }}
                         handleCreate={handleCreate}
+
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
+
                         error={error}
                         setError={setError}
+
                         studentId={studentId}
                         setStudentId={setStudentId}
+
+                        selectedStudent={selectedStudent}
+                        setSelectedStudent={setSelectedStudent}
+
                         classroomId={classroomId}
                         setClassroomId={setClassroomId}
+
+                        selectedClassroom={selectedClassroom}
+                        setSelectedClassroom={setSelectedClassroom}
                     />
                 </Modal>
             }
@@ -122,8 +138,12 @@ function Enrollments() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateEnrollmentModal(true)}
-                    >
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateEnrollmentModal(true)
+                        }}>
                         + New Enrollment
                     </NewEntityButton>
                 </Group>
@@ -141,15 +161,15 @@ function Enrollments() {
                 <EnrollmentList>
                     {enrollments.map((item) => (
                         <EnrollmentRow key={item.id}>
-                            <span>{item.id.slice(0, 8)}</span>
+                            <span>{item.id.slice(0, 8)}...</span>
                             <span>{item.studentName}</span>
                             <span>{item.schoolYear}</span>
                             <span>{item.classroomName}</span>
                             <span>{new Date(item.enrolledAt).toLocaleDateString('pt-BR')}</span>
                             {({
-                                ACTIVE: <ActiveTag>ACTIVE</ActiveTag>,
-                                FINISHED: <FinishedTag>FINISHED</FinishedTag>,
-                                CANCELED: <InactiveTag>CANCELED</InactiveTag>
+                                ACTIVE: <ActiveTag>active</ActiveTag>,
+                                FINISHED: <FinishedTag>finished</FinishedTag>,
+                                CANCELED: <InactiveTag>canceled</InactiveTag>
                             }[item.status])}
 
                             <ActionButtons>

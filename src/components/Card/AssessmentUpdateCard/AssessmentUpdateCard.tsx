@@ -1,44 +1,51 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
+import AssessmentUpdateForm from "../CardForm/AssessmentUpdateForm";
 import Modal from "../../Modal/Modal";
-import ProfessorCardForm from "../CardForm/ProfessorCardForm";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
+import type { Assessment } from "../../../services/assessmentService";
 
-interface CreationProps {
+interface updateProps {
+    assessment: Assessment;
+    handleUpdate: (event: FormEvent, id: string) => void;
     closeModal: () => void;
-    handleCreate: (event: FormEvent) => void;
+
     isFinished: boolean;
     setIsFinished: Dispatch<SetStateAction<boolean>>;
+
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
-    name?: string;
-    setName?: Dispatch<SetStateAction<string>>;
-    email?: string;
-    setEmail?: Dispatch<SetStateAction<string>>;
-    password?: string;
-    setPassword?: Dispatch<SetStateAction<string>>;
+
+    assessmentTitle?: string;
+    setAssessmentTitle?: Dispatch<SetStateAction<string>>;
+
+    assessmentType?: string;
+    setAssessmentType?: Dispatch<SetStateAction<string>>;
 }
 
-function ProfessorCreationCard({
+function AssessmentUpdateCard({
+    assessment,
+    handleUpdate,
     closeModal,
-    handleCreate,
+
     isFinished,
     setIsFinished,
+
     error,
     setError,
-    name,
-    setName = () => { },
-    email,
-    setEmail = () => { },
-    password,
-    setPassword = () => { }
-}: CreationProps) {
 
+    assessmentTitle,
+    setAssessmentTitle,
+
+    assessmentType,
+    setAssessmentType }: updateProps) {
+
+        const onSave = (e: React.FormEvent) => handleUpdate(e, assessment.id);
 
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Professor created successfully"
+                    text="Updated successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -62,22 +69,24 @@ function ProfessorCreationCard({
                     cancel={closeModal}
                 />
             </Modal>
-        )
+        );
     }
 
     return (
-        <ProfessorCardForm
-            submit={handleCreate}
+        <AssessmentUpdateForm
+            submit={onSave}
             closeModal={closeModal}
-            title="Register a New Professor"
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
+
+            cardTitle="Editing..."
+            placeholder="Leave it blank to keep current"
+
+            assessmentTitle={assessmentTitle}
+            setAssessmentTitle={setAssessmentTitle}
+
+            assessmentType={assessmentType}
+            setAssessmentType={setAssessmentType}
         />
     )
 }
 
-export default ProfessorCreationCard;
+export default AssessmentUpdateCard;

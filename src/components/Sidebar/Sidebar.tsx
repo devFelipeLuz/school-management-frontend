@@ -97,6 +97,10 @@ function Sidebar() {
             <span>Assessments</span>
           </SidebarItem>
 
+          <SidebarItem onClick={() => navigate("/attendance")}>
+            <span>Attendance</span>
+          </SidebarItem>
+
           <SidebarItem onClick={() => navigate("/school-years")}>
             <FaCalendarAlt />
             <span>School Year</span>

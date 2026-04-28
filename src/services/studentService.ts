@@ -44,6 +44,14 @@ export async function getStudents(filters?: StudentFilters) {
     return data.content;
 }
 
+export async function searchStudent(query: string) {
+    const response = await fetch(`${BASE_URL}/search?name=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    return data.content;
+}
+
 export async function createStudent(name: string, email: string, password: string) {
     const createData = { name, email, password };
 

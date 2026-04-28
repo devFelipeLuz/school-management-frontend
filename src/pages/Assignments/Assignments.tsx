@@ -18,11 +18,20 @@ function Assignments() {
         professorId,
         setProfessorId,
 
+        selectedProfessor,
+        setSelectedProfessor,
+
         subjectId,
         setSubjectId,
 
+        selectedSubject,
+        setSelectedSubject,
+
         classroomId,
         setClassroomId,
+
+        selectedClassroom,
+        setSelectedClassroom,
 
         professorName,
         setProfessorName,
@@ -39,9 +48,9 @@ function Assignments() {
         error,
         setError,
 
+        clearState,
         handleCreate,
         handleDelete,
-        clearState
     } = useAssignments();
 
     const [createAssignmentModal, setCreateAssignmentModal] = useState(false);
@@ -54,19 +63,33 @@ function Assignments() {
                     <AssignmentCreationCard
                         closeModal={() => {
                             setCreateAssignmentModal(false);
-                            clearState
+                            clearState();
                         }}
                         handleCreate={handleCreate}
+
                         isFinished={isFinished}
                         setIsFinished={setIsFinished}
+
                         error={error}
                         setError={setError}
+
                         professorId={professorId}
                         setProfessorId={setProfessorId}
+
+                        selectedProfessor={selectedProfessor}
+                        setSelectedProfessor={setSelectedProfessor}
+
                         subjectId={subjectId}
                         setSubjectId={setSubjectId}
+
+                        selectedSubject={selectedSubject}
+                        setSelectedSubject={setSelectedSubject}
+
                         classroomId={classroomId}
                         setClassroomId={setClassroomId}
+
+                        selectedClassroom={selectedClassroom}
+                        setSelectedClassroom={setSelectedClassroom}
                     />
                 </Modal>
             }
@@ -109,7 +132,12 @@ function Assignments() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateAssignmentModal(true)}>
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateAssignmentModal(true);
+                        }}>
                         + New Assignment
                     </NewEntityButton>
                 </Group>
@@ -125,7 +153,7 @@ function Assignments() {
                 <AssignmentList>
                     {assignment.map((item) => (
                         <AssignmentRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0,8)}...</span>
                             <span>{item.professorName}</span>
                             <span>{item.subjectName}</span>
                             <span>{item.classroomName}</span>

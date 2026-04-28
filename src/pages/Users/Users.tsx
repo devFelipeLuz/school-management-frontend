@@ -3,7 +3,6 @@ import { ActivateButton, DeactivateButton, EditButton, NewEntityButton } from ".
 import { LargeInput } from "../../components/Input/styles";
 import PageSetup from "../../components/PageSetup/PageSetup";
 import RoleSelect from "../../components/SelectStatus/RoleSelect";
-import SelectStatus from "../../components/SelectStatus/SelectStatus";
 import { ActionButtons, Group, InputGroup, UserList, UserRow } from "./styles";
 import { useUsers } from "../../hooks/useUsers";
 import { ActiveTag, FinishedTag, InactiveTag } from "../../components/Tag/styles";
@@ -12,12 +11,12 @@ import UserCreationCard from "../../components/Card/UserCreationCard/UserCreatio
 import ConfirmationCard from "../../components/Card/ConfirmationCard/ConfirmationCard";
 import UserEditCard from "../../components/Card/UserEditCard/UserEditCard";
 import TableHeader from "../../components/TableHeader/TableHeader";
+import UserStatusSelect from "../../components/SelectStatus/UserStatusSelect";
 
 function Users() {
 
     const {
         users,
-        setUsers,
 
         email,
         setEmail,
@@ -141,15 +140,19 @@ function Users() {
                             value={emailFilter}
                             onChange={(e) => setEmailFilter(e.target.value)}
                         />
-                        <SelectStatus activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                        <UserStatusSelect activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
 
                         <RoleSelect roleFilter={roleFilter} setRoleFilter={setRoleFilter} />
                     </InputGroup>
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateUserModal(true)}
-                    >
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateUserModal(true);
+                        }}>
                         + New User
                     </NewEntityButton>
                 </Group>

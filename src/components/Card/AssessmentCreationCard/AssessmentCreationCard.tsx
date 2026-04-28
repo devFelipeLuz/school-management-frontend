@@ -1,44 +1,61 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
+import AssessmentCreateForm from "../CardForm/AssessmentCreateForm";
 import Modal from "../../Modal/Modal";
-import ProfessorCardForm from "../CardForm/ProfessorCardForm";
 import ConfirmationCard from "../ConfirmationCard/ConfirmationCard";
+import type { Assignment } from "../../../services/assignmentService";
 
 interface CreationProps {
     closeModal: () => void;
     handleCreate: (event: FormEvent) => void;
+
     isFinished: boolean;
     setIsFinished: Dispatch<SetStateAction<boolean>>;
+
     error: boolean;
     setError: Dispatch<SetStateAction<boolean>>;
-    name?: string;
-    setName?: Dispatch<SetStateAction<string>>;
-    email?: string;
-    setEmail?: Dispatch<SetStateAction<string>>;
-    password?: string;
-    setPassword?: Dispatch<SetStateAction<string>>;
+
+    assessmentTitle: string;
+    setAssessmentTitle: Dispatch<SetStateAction<string>>;
+
+    assessmentType: string;
+    setAssessmentType: Dispatch<SetStateAction<string>>;
+
+    assignmentId: string;
+    setAssignmentId: Dispatch<SetStateAction<string>>;
+
+    selectedAssignment: Assignment | null;
+    setSelectedAssignment: Dispatch<SetStateAction<Assignment | null>>;
 }
 
-function ProfessorCreationCard({
+function AssessmentCreationCard({
     closeModal,
     handleCreate,
+
     isFinished,
     setIsFinished,
+
     error,
     setError,
-    name,
-    setName = () => { },
-    email,
-    setEmail = () => { },
-    password,
-    setPassword = () => { }
-}: CreationProps) {
 
+    assessmentTitle,
+    setAssessmentTitle,
+
+    assessmentType,
+    setAssessmentType,
+
+    assignmentId,
+    setAssignmentId,
+
+    selectedAssignment,
+    setSelectedAssignment
+
+}: CreationProps) {
 
     if (isFinished) {
         return (
             <Modal>
                 <ConfirmationCard
-                    text="Professor created successfully"
+                    text="Assessment created successfully"
                     cancelTextButton="close"
                     successTextButton="confirm"
                     confirm={() => {
@@ -66,18 +83,24 @@ function ProfessorCreationCard({
     }
 
     return (
-        <ProfessorCardForm
+        <AssessmentCreateForm
             submit={handleCreate}
             closeModal={closeModal}
-            title="Register a New Professor"
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
+            cardTitle="Register a new Assessment"
+
+            assessmentTitle={assessmentTitle}
+            setAssessmentTitle={setAssessmentTitle}
+
+            assessmentType={assessmentType}
+            setAssessmentType={setAssessmentType}
+
+            assignmentId={assignmentId}
+            setAssignmentId={setAssignmentId}
+
+            selectedAssignment={selectedAssignment}
+            setSelectedAssignment={setSelectedAssignment}
         />
     )
 }
 
-export default ProfessorCreationCard;
+export default AssessmentCreationCard;

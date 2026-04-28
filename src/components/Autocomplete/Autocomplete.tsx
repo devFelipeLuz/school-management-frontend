@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAutocomplete } from "../../hooks/useAutocomplete";
 import type { AutocompleteProps, BaseEntity } from "../../services/autocompleteService";
-import { InputGroup, Label } from "../Card/CardForm/styles";
-import { DropDown, DropDownItem } from "./styles";
+import { InputGroup } from "../Card/CardForm/styles";
+import { DropDown, DropDownItem, LoadingDiv } from "./styles";
 import Input from "../Input/Input";
 
 function Autocomplete<T extends BaseEntity>({
@@ -33,7 +33,6 @@ function Autocomplete<T extends BaseEntity>({
     return (
         <div>
             <InputGroup>
-                <Label>Schoolyear</Label>
                 <Input
                     value={query}
                     placeholder={placeholder}
@@ -44,7 +43,7 @@ function Autocomplete<T extends BaseEntity>({
                     }}
                 />
             </InputGroup>
-            {loading && <div>Loading...</div>}
+            {loading && <LoadingDiv>Loading...</LoadingDiv>}
 
             {isOpen && results.length > 0 && (
                 <DropDown>

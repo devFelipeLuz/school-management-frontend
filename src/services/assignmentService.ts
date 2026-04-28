@@ -43,6 +43,14 @@ export async function getAssignments(filters?: AssignmentFilter) {
     return data.content;
 }
 
+export async function searchAssignment(query: string) {
+    const response = await fetch(`${BASE_URL}/search?subjectName=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    return data.content;
+}
+
 export async function createAssignment(professorId: string, subjectId: string, classroomId: string) {
     const createData = { professorId, subjectId, classroomId };
 

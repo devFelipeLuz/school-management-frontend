@@ -26,7 +26,7 @@ export const InputGroup = styled.div`
 
 export const TableHeader = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   width: 100%;
   padding: 0 20px;
   margin-bottom: 8px;
@@ -45,7 +45,7 @@ export const ClassroomList = styled.div`
 
 export const ClassroomRow = styled.div`
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
 
     width: 100%;

@@ -13,7 +13,10 @@ export function useEnrollments() {
     const [selectedEnrollment, setSelectedEnrollment] = useState<Enrollments | null>(null);
 
     const [studentId, setStudentId] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState<any>(null);
+
     const [classroomId, setClassroomId] = useState("");
+    const [selectedClassroom, setSelectedClassroom] = useState<any>(null);
 
     const [nameFilter, setNamefilter] = useState("");
     const [activeFilter, setActiveFilter] = useState("");
@@ -41,6 +44,8 @@ export function useEnrollments() {
     const clearState = () => {
         setStudentId("");
         setClassroomId("");
+        setSelectedStudent(null);
+        setSelectedClassroom(null);
     }
 
     const handleCreate = async (event: React.FormEvent) => {
@@ -128,8 +133,14 @@ export function useEnrollments() {
         studentId,
         setStudentId,
 
+        selectedStudent,
+        setSelectedStudent,
+
         classroomId,
         setClassroomId,
+
+        selectedClassroom,
+        setSelectedClassroom,
 
         activeFilter,
         setActiveFilter,

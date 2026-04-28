@@ -14,13 +14,17 @@ export const DefaultHeader = styled.div`
 `
 
 export const ProfessorHeader = styled(DefaultHeader)`
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 `
 
 export const SubjectHeader = styled(DefaultHeader)`
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `
 
 export const AssignmentHeader = styled(DefaultHeader)`
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+`
+
+export const AssessmentHeader = styled(DefaultHeader)`
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
 `

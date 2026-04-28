@@ -166,7 +166,7 @@ function Classrooms() {
                 <ClassroomList>
                     {classrooms.map((item) => (
                         <ClassroomRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0, 8)}...</span>
                             <span>{item.name}</span>
                             <span>{item.enrollmentCountForSchoolYear}</span>
                             <span>{item.maxCapacity}</span>

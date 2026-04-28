@@ -130,7 +130,12 @@ function Subject() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateSubjectModal(true)}>
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateSubjectModal(true);
+                        }}>
                         + New Subject
                     </NewEntityButton>
                 </Group>
@@ -145,7 +150,7 @@ function Subject() {
                 <SubjectList>
                     {subject.map((item) => (
                         <SubjectRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0,8)}...</span>
                             <span>{item.name}</span>
                             {item.active ?
                                 <ActiveTag>active</ActiveTag> :

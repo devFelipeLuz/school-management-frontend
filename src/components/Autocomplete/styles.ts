@@ -15,3 +15,7 @@ export const DropDownItem = styled.div`
     border-radius: 8px;
     cursor: pointer;
 `
+
+export const LoadingDiv = styled.div`
+    color: #fff;
+`

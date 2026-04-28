@@ -40,6 +40,14 @@ export async function getClassrooms(filters?: ClassroomFilters) {
     return data.content;
 }
 
+export async function searchClassroom(query: string) {
+    const response = await fetch(`${BASE_URL}/search?name=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    return data.content;
+}
+
 export async function createClassroom(name: string, schoolYearId: string) {
     const createData = { name, schoolYearId };
 

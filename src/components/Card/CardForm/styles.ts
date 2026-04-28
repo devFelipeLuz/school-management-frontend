@@ -55,6 +55,6 @@ export const Label = styled.label`
     color: #fff;
 `
 
-export const SelectRole = styled(StatusSelect)`
+export const FormSelect = styled(StatusSelect)`
     width: 100%;
 `

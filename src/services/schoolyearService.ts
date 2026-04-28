@@ -41,7 +41,7 @@ export async function getSchoolyears(filter?: SchoolyearFilter) {
 }
 
 export async function searchSchoolYears(query: string) {
-    const response = await fetch(`${BASE_URL}?year=${query}`, {
+    const response = await fetch(`${BASE_URL}/search?year=${query}`, {
         headers: getAuthHeaders()
     });
     const data = await response.json();

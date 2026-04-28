@@ -23,15 +23,15 @@ export const InputGroup = styled.div`
   }
 `
 
-export const StudentList = styled.div`
+export const AssessmentList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `
 
-export const StudentRow = styled.div`
+export const AssessmentRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
   align-items: center;
 
   width: 100%;
@@ -45,18 +45,6 @@ export const StudentRow = styled.div`
   }
 `
 
-export const TableHeader = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.5fr 1fr 1fr 1fr;
-  width: 100%;
-  padding: 0 20px;
-  margin-bottom: 8px;
-
-  span {
-    justify-self: center;
-    font-weight: 600;
-  }
-`
 export const ActionButtons = styled.div`
   display: flex;
   gap: 8px;

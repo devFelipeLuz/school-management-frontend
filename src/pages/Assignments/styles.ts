@@ -31,7 +31,7 @@ export const AssignmentList = styled.div`
 
 export const AssignmentRow = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
 
   width: 100%;

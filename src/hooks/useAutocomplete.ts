@@ -24,7 +24,7 @@ export function useAutocomplete<T>(
             } finally {
                 setLoading(false);
             }
-        }, 300);
+        }, 500);
 
         return () => clearTimeout(timer);
     }, [query, fetchFn]);

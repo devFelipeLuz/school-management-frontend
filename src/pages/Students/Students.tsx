@@ -145,7 +145,12 @@ function Students() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateStudentModal(true)}>
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateStudentModal(true);
+                        }}>
                         + New Student
                     </NewEntityButton>
                 </Group>
@@ -160,7 +165,7 @@ function Students() {
                 <StudentList>
                     {students.map((item) => (
                         <StudentRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0,8)}...</span>
                             <span>{item.name}</span>
                             <span>{item.email}</span>
                             <span>{item.classroom || "N/A"}</span>
@@ -207,7 +212,7 @@ function Students() {
                         </StudentRow>
                     ))}
                 </StudentList>
-            </PageSetup>
+            </PageSetup >
         </>
     );
 }

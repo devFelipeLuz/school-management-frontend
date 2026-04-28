@@ -6,8 +6,13 @@ export function useAssignments() {
     const [selectedAssignment, setSelectedAssignment] = useState<Assignment | null>(null);
 
     const [professorId, setProfessorId] = useState("");
+    const [selectedProfessor, setSelectedProfessor] = useState<any>(null);
+
     const [subjectId, setSubjectId] = useState("");
+    const [selectedSubject, setSelectedSubject] = useState<any>(null);
+
     const [classroomId, setClassroomId] = useState("");
+    const [selectedClassroom, setSelectedClassroom] = useState<any>(null);
 
     const [professorName, setProfessorName] = useState("");
     const [subjectName, setSubjectName] = useState("");
@@ -34,6 +39,15 @@ export function useAssignments() {
             console.error(error);
         }
     };
+
+    const clearState = () => {
+        setProfessorName("");
+        setSubjectName("");
+        setClassroomName("");
+        setSelectedProfessor(null);
+        setSelectedSubject(null);
+        setSelectedClassroom(null);
+    }
 
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -72,12 +86,6 @@ export function useAssignments() {
         }
     }
 
-    const clearState = () => {
-        setProfessorName("");
-        setSubjectName("");
-        setClassroomName("");
-    }
-
     useEffect(() => {
         fetchAssignments();
     }, [debouncedProfessorName, debouncedSubjectName, debouncedClassroomName]);
@@ -102,11 +110,20 @@ export function useAssignments() {
         professorId,
         setProfessorId,
 
+        selectedProfessor,
+        setSelectedProfessor,
+
         subjectId,
         setSubjectId,
 
+        selectedSubject,
+        setSelectedSubject,
+
         classroomId,
         setClassroomId,
+
+        selectedClassroom,
+        setSelectedClassroom,
 
         professorName,
         setProfessorName,
@@ -133,8 +150,8 @@ export function useAssignments() {
         setError,
 
         fetchAssignments,
+        clearState,
         handleCreate,
-        handleDelete,
-        clearState
-    }
+        handleDelete
+    };
 }

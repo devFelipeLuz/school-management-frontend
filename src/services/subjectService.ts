@@ -37,6 +37,14 @@ export async function getSubjects(filters?: SubjectFilter) {
     return data.content;
 }
 
+export async function searchSubject(query: string) {
+    const response = await fetch(`${BASE_URL}/search?name=${query}`, {
+        headers: getAuthHeaders()
+    });
+    const data = await response.json();
+    return data.content;
+}
+
 export async function createSubject(name: string) {
     const createData = { name };
 

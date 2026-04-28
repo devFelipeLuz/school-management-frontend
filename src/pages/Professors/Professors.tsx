@@ -152,7 +152,12 @@ function Professors() {
 
                     <NewEntityButton
                         type="button"
-                        onClick={() => setCreateProfessorModal(true)}>
+                        onClick={() => {
+                            setIsFinished(false);
+                            setError(false);
+                            clearState();
+                            setCreateProfessorModal(true);
+                        }}>
                         + New Professor
                     </NewEntityButton>
                 </Group>
@@ -168,7 +173,7 @@ function Professors() {
                 <ProfessorList>
                     {professor.map((item) => (
                         <ProfessorRow key={item.id}>
-                            <span>{item.id}</span>
+                            <span>{item.id.slice(0, 8)}...</span>
                             <span>{item.name}</span>
                             <span>{item.email}</span>
                             {item.active ?

@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { CancelButton, SuccessButton } from "../../Button/styles";
 import Input from "../../Input/Input";
-import { ButtonGroup, Form, InputGroup, Label, Section, SelectRole, Title } from "./styles";
+import { ButtonGroup, Form, InputGroup, Label, Section, FormSelect, Title } from "./styles";
 
 
 interface UserFormProps {
@@ -58,12 +58,12 @@ function UserForm({
                     />
                 </InputGroup>
 
-                <SelectRole value={role} onChange={(e) => setRole(e.target.value)} name="user-role" id="user-role">
+                <FormSelect value={role} onChange={(e) => setRole(e.target.value)} name="user-role" id="user-role">
                     <option value="ADMIN">Admin</option>
                     <option value="STUDENT">Student</option>
                     <option value="PROFESSOR">Professor</option>
                     <option value="COORDINATOR">Coordinator</option>
-                </SelectRole>
+                </FormSelect>
 
                 <ButtonGroup>
                     <CancelButton type="button" onClick={() => closeModal()}>cancel</CancelButton>

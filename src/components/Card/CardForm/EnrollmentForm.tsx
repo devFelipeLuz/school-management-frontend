@@ -1,25 +1,38 @@
 import type { Dispatch, SetStateAction } from "react";
 import { CancelButton, SuccessButton } from "../../Button/styles";
-import Input from "../../Input/Input";
 import { ButtonGroup, Form, InputGroup, Label, Section, Title } from "./styles";
+import { searchStudent, type Students } from "../../../services/studentService";
+import { searchClassroom, type Classroom } from "../../../services/classroomService";
+import Autocomplete from "../../Autocomplete/Autocomplete";
 
 interface EnrollmentCardFormProps {
     submit: (event: React.FormEvent) => void;
     closeModal: () => void;
+
     title?: string;
+
     studentId: string;
     setStudentId: Dispatch<SetStateAction<string>>;
+
+    selectedStudent: Students | null;
+    setSelectedStudent: Dispatch<SetStateAction<Students | null>>;
+
     classroomId: string;
     setClassroomId: Dispatch<SetStateAction<string>>;
+
+    selectedClassroom: Classroom | null;
+    setSelectedClassroom: Dispatch<SetStateAction<Classroom | null>>;
 }
 
 function EnrollmentForm({
     submit,
     closeModal,
     title,
-    studentId,
+    selectedStudent,
+    setSelectedStudent = () => { },
     setStudentId = () => { },
-    classroomId,
+    selectedClassroom,
+    setSelectedClassroom = () => { },
     setClassroomId = () => { } }: EnrollmentCardFormProps) {
 
     return (
@@ -28,24 +41,30 @@ function EnrollmentForm({
             <Form onSubmit={submit}>
                 <Title>{title}</Title>
                 <InputGroup>
-                    <Label htmlFor="student-id">Student_ID</Label>
-                    <Input
-                        type="text"
-                        name="student-id"
-                        id="student-id"
-                        value={studentId}
-                        onChange={(e) => setStudentId(e.target.value)}
+                    <Label>Student</Label>
+                    <Autocomplete
+                        value={selectedStudent}
+                        onChange={(item) => {
+                            setSelectedStudent(item);
+                            setStudentId?.(item?.id ?? "");
+                        }}
+                        fetchFn={searchStudent}
+                        getLabel={(item) => String(item.name)}
+                        placeholder="Search student..."
                     />
                 </InputGroup>
 
                 <InputGroup>
-                    <Label htmlFor="classroom-id">Classroom_ID</Label>
-                    <Input
-                        type="text"
-                        name="classroom-id"
-                        id="classroom-id"
-                        value={classroomId}
-                        onChange={(e) => setClassroomId(e.target.value)}
+                    <Label>Classroom</Label>
+                    <Autocomplete
+                        value={selectedClassroom}
+                        onChange={(item) => {
+                            setSelectedClassroom(item);
+                            setClassroomId?.(item?.id ?? "");
+                        }}
+                        fetchFn={searchClassroom}
+                        getLabel={(item) => String(item.name)}
+                        placeholder="Search classroom..."
                     />
                 </InputGroup>
 
